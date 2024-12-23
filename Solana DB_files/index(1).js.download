@@ -1,0 +1,174 @@
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+import { i as insertStyles } from '../../assets/scripts/swiper-core-875fc69d.js';
+import { A as Accordions } from '../../assets/scripts/index-d26a61ef.js';
+import { g as gsapWithCSS } from '../../assets/scripts/index-8d1c0166.js';
+import { S as ScrollTrigger } from '../../assets/scripts/ScrollTrigger-5ab3e1af.js';
+import { C as CLASSES } from '../../assets/scripts/classes-dbc829bc.js';
+import { l as lockScroll, u as unlockScroll } from '../../assets/scripts/scroll-lock-6bff18ed.js';
+gsapWithCSS.registerPlugin(ScrollTrigger);
+var LINK_SELECTOR$1 = '[data-role="link"]';
+var wideScreensMediaRule = window.matchMedia('(min-width: 1440px)');
+var DesktopMenu = /*#__PURE__*/_createClass(function DesktopMenu(_ref) {
+  var _this = this;
+  var component = _ref.component;
+  _classCallCheck(this, DesktopMenu);
+  _defineProperty(this, "closeByDocumentClick", function (event) {
+    // console.log(this.scrollTrigger);
+    if (!_this.component.contains(event.target) && _this.scrollTrigger.isActive) {
+      _this.close();
+    }
+  });
+  _defineProperty(this, "open", function () {
+    _this.accordions.open(_this.accordions.itemElements[0]);
+  });
+  _defineProperty(this, "close", function () {
+    _this.accordions.closeAll();
+  });
+  _defineProperty(this, "init", function () {
+    _this.accordions.init();
+    if (wideScreensMediaRule.matches) {
+      _this.open();
+    }
+    _this.scrollTrigger = ScrollTrigger.create({
+      trigger: document.body,
+      start: '500 top',
+      onEnter: _this.close,
+      onLeaveBack: function onLeaveBack() {
+        if (wideScreensMediaRule.matches) {
+          _this.open();
+        }
+      }
+    });
+    _this.links.forEach(function (link) {
+      link.addEventListener('click', _this.close);
+    });
+  });
+  this.component = component;
+  this.accordions = new Accordions({
+    parentElement: component,
+    isSingle: true,
+    accordionSelector: '[data-role="desktop-menu"]',
+    itemSelector: '[data-role="desktop-menu-inner"]',
+    summarySelector: '[data-role="desktop-menu-opener"]',
+    detailsSelector: '[data-role="menu-links"]',
+    on: {
+      open: function open() {
+        document.addEventListener('click', _this.closeByDocumentClick);
+      },
+      close: function close() {
+        document.removeEventListener('click', _this.closeByDocumentClick);
+      }
+    }
+  });
+  this.scrollTrigger = undefined;
+  this.links = component.querySelectorAll(LINK_SELECTOR$1);
+});
+gsapWithCSS.registerPlugin(ScrollTrigger);
+var HeaderScrollTrigger = /*#__PURE__*/_createClass(function HeaderScrollTrigger(_ref2) {
+  var _this2 = this;
+  var component = _ref2.component;
+  _classCallCheck(this, HeaderScrollTrigger);
+  // eslint-disable-next-line class-methods-use-this
+  _defineProperty(this, "init", function () {
+    _this2.scrollTrigger = ScrollTrigger.create({
+      trigger: '#faq',
+      start: 'top top',
+      onEnter: function onEnter() {
+        _this2.hideHeader();
+      },
+      onLeaveBack: function onLeaveBack() {
+        _this2.showHeader();
+      }
+    });
+  });
+  _defineProperty(this, "hideHeader", function () {
+    _this2.component.classList.add(CLASSES.DISABLED);
+  });
+  _defineProperty(this, "showHeader", function () {
+    _this2.component.classList.remove(CLASSES.DISABLED);
+  });
+  this.component = component;
+  this.scrollTrigger = undefined;
+});
+var styles = "[data-accordion-role=item] {\n  display: grid;\n  grid-template-rows: max-content 0fr;\n  transition: grid 0.5s ease;\n}\n[data-accordion-role=item] [data-accordion-role=summary] {\n  cursor: pointer;\n}\n[data-accordion-role=item].js--open {\n  grid-template-rows: max-content 1fr;\n}\n[data-accordion-role=item] [data-accordion-role=details] {\n  overflow: hidden;\n}\n.body.js--locked [data-component-id=header] {\n  padding-inline-end: var(--js-scrollbar-width);\n}\n[data-component-id=header] {\n  transition: all 0.3s ease-in-out;\n}\n@media screen and (max-width: 991px) {\n  [data-component-id=header].js--disabled {\n    transform: translateY(-100%);\n  }\n}\n[data-component-id=header] [data-role=mobile-menu-inner] .menu__links-inner {\n  scrollbar-color: transparent transparent;\n  --scrollbar-thumb-color: transparent;\n  --scrollbar-background-color: transparent;\n}\n[data-component-id=header] [data-role=mobile-menu-inner].js--animated .menu__links-inner {\n  scrollbar-color: var(--accent) transparent;\n  --scrollbar-thumb-color: var(--accent);\n  --scrollbar-background-color: var(--primary-900);\n}\n[data-component-id=header] [data-role=mobile-menu-opener] .header-menu__burger .header-menu__stick .header-menu__stick-inner {\n  transition: all 0.3s ease-in-out;\n}\n[data-component-id=header] [data-role=mobile-menu-opener] .header-menu__burger .header-menu__stick:nth-child(1) .header-menu__stick-inner {\n  transform: translateY(5px);\n}\n[data-component-id=header] [data-role=mobile-menu-opener] .header-menu__burger .header-menu__stick:nth-child(2) .header-menu__stick-inner {\n  transform: translateY(-5px);\n}\n[data-component-id=header] [data-role=mobile-menu-opener][aria-expanded=true] .header-menu__burger .header-menu__stick:nth-child(1) .header-menu__stick-inner {\n  transform: rotate(45deg);\n}\n[data-component-id=header] [data-role=mobile-menu-opener][aria-expanded=true] .header-menu__burger .header-menu__stick:nth-child(2) .header-menu__stick-inner {\n  transform: rotate(-45deg);\n}\n[data-component-id=header] [data-role=page-overlay] {\n  transition: all 0.3s ease-in-out;\n  background-color: var(--primary-900);\n  opacity: 0;\n}\n[data-component-id=header] [data-role=page-overlay].js--active {\n  opacity: 1;\n  pointer-events: auto;\n}\n[data-component-id=header] [data-role=desktop-menu-inner] {\n  overflow: hidden;\n  grid-template-rows: 1.5rem 0fr;\n}\n@media screen and (max-width: 991px) {\n  [data-component-id=header] [data-role=desktop-menu-inner] {\n    grid-template-rows: max-content 0fr;\n  }\n}\n[data-component-id=header] [data-role=desktop-menu-inner] [data-role=desktop-menu-opener] {\n  margin-top: 0%;\n  transition: margin-top 0.3s ease-in-out;\n}\n[data-component-id=header] [data-role=desktop-menu-inner].js--open {\n  grid-template-rows: 0rem 1fr;\n}\n@media screen and (max-width: 991px) {\n  [data-component-id=header] [data-role=desktop-menu-inner].js--open {\n    grid-template-rows: max-content 1fr;\n  }\n}\n[data-component-id=header] [data-role=desktop-menu-inner].js--open [data-role=desktop-menu-opener] {\n  margin-top: -1.5rem;\n}\n@media screen and (max-width: 991px) {\n  [data-component-id=header] [data-role=desktop-menu-inner].js--open [data-role=desktop-menu-opener] {\n    margin-top: 0;\n  }\n}";
+
+/* eslint-disable class-methods-use-this */
+
+var LINK_SELECTOR = '[data-role="link"]';
+var PAGE_OVERLAY_SELECTOR = '[data-role="page-overlay"]';
+var MobileMenu = /*#__PURE__*/_createClass(function MobileMenu(_ref3) {
+  var _this3 = this;
+  var component = _ref3.component;
+  _classCallCheck(this, MobileMenu);
+  _defineProperty(this, "open", function () {
+    _this3.accordions.open(_this3.accordions.itemElements[0]);
+  });
+  _defineProperty(this, "close", function () {
+    _this3.accordions.close(_this3.accordions.itemElements[0]);
+  });
+  _defineProperty(this, "closeByResize", function () {
+    if (_this3.currentWidth !== document.documentElement.clientWidth) {
+      _this3.close();
+      _this3.currentWidth = document.documentElement.clientWidth;
+    }
+  });
+  _defineProperty(this, "openHandler", function () {
+    setTimeout(function () {
+      _this3.accordions.itemElements[0].classList.add(CLASSES.ANIMATED);
+    }, 1000);
+    _this3.pageOverlay.classList.add(CLASSES.ACTIVE);
+    lockScroll();
+  });
+  _defineProperty(this, "closeHandler", function () {
+    _this3.accordions.itemElements[0].classList.remove(CLASSES.ANIMATED);
+    _this3.pageOverlay.classList.remove(CLASSES.ACTIVE);
+    unlockScroll();
+  });
+  _defineProperty(this, "transitionEndHandler", function () {});
+  _defineProperty(this, "init", function () {
+    _this3.accordions = new Accordions({
+      parentElement: _this3.component,
+      isSingle: true,
+      accordionSelector: '[data-role="mobile-menu"]',
+      itemSelector: '[data-role="mobile-menu-inner"]',
+      summarySelector: '[data-role="mobile-menu-opener"]',
+      detailsSelector: '[data-role="menu-links"]',
+      on: {
+        open: _this3.openHandler,
+        close: _this3.closeHandler
+      }
+    });
+    _this3.accordions.init();
+    _this3.accordions.itemElements[0].addEventListener('transitionend', _this3.transitionEndHandler);
+    _this3.close();
+    _this3.links.forEach(function (link) {
+      link.addEventListener('click', _this3.close);
+    });
+    window.addEventListener('resize', _this3.closeByResize);
+  });
+  this.component = component;
+  this.accordions = undefined;
+  this.links = component.querySelectorAll(LINK_SELECTOR);
+  this.currentWidth = document.documentElement.clientWidth;
+  this.pageOverlay = component.querySelector(PAGE_OVERLAY_SELECTOR);
+});
+insertStyles(styles);
+var componentElement = document.querySelector('[data-component-id="header"]');
+var desktopMenu = new DesktopMenu({
+  component: componentElement
+});
+var mobileMenu = new MobileMenu({
+  component: componentElement
+});
+var headerScrollTrigger = new HeaderScrollTrigger({
+  component: componentElement
+});
+desktopMenu.init();
+mobileMenu.init();
+headerScrollTrigger.init();

@@ -1,0 +1,510 @@
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+import { n as now, e as elementTransitionEnd, S as Swiper, i as insertStyles } from '../../assets/scripts/swiper-core-875fc69d.js';
+import { g as gsapWithCSS } from '../../assets/scripts/index-8d1c0166.js';
+import { S as ScrollTrigger } from '../../assets/scripts/ScrollTrigger-5ab3e1af.js';
+import { B as BREAKPOINTS } from '../../assets/scripts/breakpoints-c1c87b10.js';
+import { C as CLASSES } from '../../assets/scripts/classes-dbc829bc.js';
+var styles = "[data-component-id=performance] [data-role=number-element]::after {\n  content: \"%\";\n}\n@media screen and (min-width: 1440px) {\n  [data-component-id=performance] [data-role=diagram] {\n    padding-inline: 6.75rem;\n  }\n}\n[data-component-id=performance] .performance__diagram-column * {\n  transition: all 0.3s ease 0s;\n}\n[data-component-id=performance] .performance__diagram-column.js--max [data-role=number-element], [data-component-id=performance] .performance__diagram-column.js--max .text--diagram-month {\n  background-image: none;\n  color: var(--accent);\n  -webkit-text-fill-color: unset;\n}\n[data-component-id=performance] .performance__diagram-column.js--max .performance__diagram-genius-line {\n  background-image: none;\n  background-color: var(--accent);\n}\n[data-component-id=performance] .performance__diagram-column.js--max .performance__diagram-column-overlay {\n  background-color: var(--accent);\n  mask-image: linear-gradient(rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%);\n}\n[data-component-id=performance] .performance__diagram-column.js--max .performance__diagram-column-borders {\n  border-color: var(--accent);\n  mask-image: linear-gradient(rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 100%);\n}\n@media screen and (min-width: 1440px) {\n  [data-component-id=performance] .performance__diagram-column.js--total-1 .performance__diagram-number-wrapper, [data-component-id=performance] .performance__diagram-column.js--total-2 .performance__diagram-number-wrapper, [data-component-id=performance] .performance__diagram-column.js--total-3 .performance__diagram-number-wrapper, [data-component-id=performance] .performance__diagram-column.js--total-4 .performance__diagram-number-wrapper {\n    padding-bottom: 2.5rem;\n  }\n  [data-component-id=performance] .performance__diagram-column.js--total-1 [data-role=number-element], [data-component-id=performance] .performance__diagram-column.js--total-2 [data-role=number-element], [data-component-id=performance] .performance__diagram-column.js--total-3 [data-role=number-element], [data-component-id=performance] .performance__diagram-column.js--total-4 [data-role=number-element] {\n    font-size: 6rem;\n  }\n  [data-component-id=performance] .performance__diagram-column.js--total-1 .text--diagram-month, [data-component-id=performance] .performance__diagram-column.js--total-2 .text--diagram-month, [data-component-id=performance] .performance__diagram-column.js--total-3 .text--diagram-month, [data-component-id=performance] .performance__diagram-column.js--total-4 .text--diagram-month {\n    font-size: 1.5rem;\n  }\n  [data-component-id=performance] .performance__diagram-column.js--total-5 .performance__diagram-number-wrapper {\n    padding-bottom: 2.25rem;\n  }\n  [data-component-id=performance] .performance__diagram-column.js--total-5 [data-role=number-element] {\n    font-size: 5rem;\n  }\n  [data-component-id=performance] .performance__diagram-column.js--total-5 .text--diagram-month {\n    font-size: 1.5rem;\n  }\n  [data-component-id=performance] .performance__diagram-column.js--total-6 .performance__diagram-number-wrapper {\n    padding-bottom: 2rem;\n  }\n  [data-component-id=performance] .performance__diagram-column.js--total-6 [data-role=number-element] {\n    font-size: 4rem;\n  }\n  [data-component-id=performance] .performance__diagram-column.js--total-6 .text--diagram-month {\n    font-size: 1.5rem;\n  }\n}\n[data-component-id=performance] .performance__diagram-column.js--less-than-10-percents .performance__diagram-text-wrapper {\n  display: none;\n}\n[data-component-id=performance] .performance__diagram-column.js--less-than-10-percents .performance__diagram-text-wrapper--top {\n  display: block;\n}";
+function freeMode(_ref) {
+  var swiper = _ref.swiper,
+    extendParams = _ref.extendParams,
+    emit = _ref.emit,
+    once = _ref.once;
+  extendParams({
+    freeMode: {
+      enabled: false,
+      momentum: true,
+      momentumRatio: 1,
+      momentumBounce: true,
+      momentumBounceRatio: 1,
+      momentumVelocityRatio: 1,
+      sticky: false,
+      minimumVelocity: 0.02
+    }
+  });
+  function onTouchStart() {
+    if (swiper.params.cssMode) return;
+    var translate = swiper.getTranslate();
+    swiper.setTranslate(translate);
+    swiper.setTransition(0);
+    swiper.touchEventsData.velocities.length = 0;
+    swiper.freeMode.onTouchEnd({
+      currentPos: swiper.rtl ? swiper.translate : -swiper.translate
+    });
+  }
+  function onTouchMove() {
+    if (swiper.params.cssMode) return;
+    var data = swiper.touchEventsData,
+      touches = swiper.touches;
+    // Velocity
+    if (data.velocities.length === 0) {
+      data.velocities.push({
+        position: touches[swiper.isHorizontal() ? 'startX' : 'startY'],
+        time: data.touchStartTime
+      });
+    }
+    data.velocities.push({
+      position: touches[swiper.isHorizontal() ? 'currentX' : 'currentY'],
+      time: now()
+    });
+  }
+  function onTouchEnd(_ref2) {
+    var currentPos = _ref2.currentPos;
+    if (swiper.params.cssMode) return;
+    var params = swiper.params,
+      wrapperEl = swiper.wrapperEl,
+      rtl = swiper.rtlTranslate,
+      snapGrid = swiper.snapGrid,
+      data = swiper.touchEventsData;
+    // Time diff
+    var touchEndTime = now();
+    var timeDiff = touchEndTime - data.touchStartTime;
+    if (currentPos < -swiper.minTranslate()) {
+      swiper.slideTo(swiper.activeIndex);
+      return;
+    }
+    if (currentPos > -swiper.maxTranslate()) {
+      if (swiper.slides.length < snapGrid.length) {
+        swiper.slideTo(snapGrid.length - 1);
+      } else {
+        swiper.slideTo(swiper.slides.length - 1);
+      }
+      return;
+    }
+    if (params.freeMode.momentum) {
+      if (data.velocities.length > 1) {
+        var lastMoveEvent = data.velocities.pop();
+        var velocityEvent = data.velocities.pop();
+        var distance = lastMoveEvent.position - velocityEvent.position;
+        var time = lastMoveEvent.time - velocityEvent.time;
+        swiper.velocity = distance / time;
+        swiper.velocity /= 2;
+        if (Math.abs(swiper.velocity) < params.freeMode.minimumVelocity) {
+          swiper.velocity = 0;
+        }
+        // this implies that the user stopped moving a finger then released.
+        // There would be no events with distance zero, so the last event is stale.
+        if (time > 150 || now() - lastMoveEvent.time > 300) {
+          swiper.velocity = 0;
+        }
+      } else {
+        swiper.velocity = 0;
+      }
+      swiper.velocity *= params.freeMode.momentumVelocityRatio;
+      data.velocities.length = 0;
+      var momentumDuration = 1000 * params.freeMode.momentumRatio;
+      var momentumDistance = swiper.velocity * momentumDuration;
+      var newPosition = swiper.translate + momentumDistance;
+      if (rtl) newPosition = -newPosition;
+      var doBounce = false;
+      var afterBouncePosition;
+      var bounceAmount = Math.abs(swiper.velocity) * 20 * params.freeMode.momentumBounceRatio;
+      var needsLoopFix;
+      if (newPosition < swiper.maxTranslate()) {
+        if (params.freeMode.momentumBounce) {
+          if (newPosition + swiper.maxTranslate() < -bounceAmount) {
+            newPosition = swiper.maxTranslate() - bounceAmount;
+          }
+          afterBouncePosition = swiper.maxTranslate();
+          doBounce = true;
+          data.allowMomentumBounce = true;
+        } else {
+          newPosition = swiper.maxTranslate();
+        }
+        if (params.loop && params.centeredSlides) needsLoopFix = true;
+      } else if (newPosition > swiper.minTranslate()) {
+        if (params.freeMode.momentumBounce) {
+          if (newPosition - swiper.minTranslate() > bounceAmount) {
+            newPosition = swiper.minTranslate() + bounceAmount;
+          }
+          afterBouncePosition = swiper.minTranslate();
+          doBounce = true;
+          data.allowMomentumBounce = true;
+        } else {
+          newPosition = swiper.minTranslate();
+        }
+        if (params.loop && params.centeredSlides) needsLoopFix = true;
+      } else if (params.freeMode.sticky) {
+        var nextSlide;
+        for (var j = 0; j < snapGrid.length; j += 1) {
+          if (snapGrid[j] > -newPosition) {
+            nextSlide = j;
+            break;
+          }
+        }
+        if (Math.abs(snapGrid[nextSlide] - newPosition) < Math.abs(snapGrid[nextSlide - 1] - newPosition) || swiper.swipeDirection === 'next') {
+          newPosition = snapGrid[nextSlide];
+        } else {
+          newPosition = snapGrid[nextSlide - 1];
+        }
+        newPosition = -newPosition;
+      }
+      if (needsLoopFix) {
+        once('transitionEnd', function () {
+          swiper.loopFix();
+        });
+      }
+      // Fix duration
+      if (swiper.velocity !== 0) {
+        if (rtl) {
+          momentumDuration = Math.abs((-newPosition - swiper.translate) / swiper.velocity);
+        } else {
+          momentumDuration = Math.abs((newPosition - swiper.translate) / swiper.velocity);
+        }
+        if (params.freeMode.sticky) {
+          // If freeMode.sticky is active and the user ends a swipe with a slow-velocity
+          // event, then durations can be 20+ seconds to slide one (or zero!) slides.
+          // It's easy to see this when simulating touch with mouse events. To fix this,
+          // limit single-slide swipes to the default slide duration. This also has the
+          // nice side effect of matching slide speed if the user stopped moving before
+          // lifting finger or mouse vs. moving slowly before lifting the finger/mouse.
+          // For faster swipes, also apply limits (albeit higher ones).
+          var moveDistance = Math.abs((rtl ? -newPosition : newPosition) - swiper.translate);
+          var currentSlideSize = swiper.slidesSizesGrid[swiper.activeIndex];
+          if (moveDistance < currentSlideSize) {
+            momentumDuration = params.speed;
+          } else if (moveDistance < 2 * currentSlideSize) {
+            momentumDuration = params.speed * 1.5;
+          } else {
+            momentumDuration = params.speed * 2.5;
+          }
+        }
+      } else if (params.freeMode.sticky) {
+        swiper.slideToClosest();
+        return;
+      }
+      if (params.freeMode.momentumBounce && doBounce) {
+        swiper.updateProgress(afterBouncePosition);
+        swiper.setTransition(momentumDuration);
+        swiper.setTranslate(newPosition);
+        swiper.transitionStart(true, swiper.swipeDirection);
+        swiper.animating = true;
+        elementTransitionEnd(wrapperEl, function () {
+          if (!swiper || swiper.destroyed || !data.allowMomentumBounce) return;
+          emit('momentumBounce');
+          swiper.setTransition(params.speed);
+          setTimeout(function () {
+            swiper.setTranslate(afterBouncePosition);
+            elementTransitionEnd(wrapperEl, function () {
+              if (!swiper || swiper.destroyed) return;
+              swiper.transitionEnd();
+            });
+          }, 0);
+        });
+      } else if (swiper.velocity) {
+        emit('_freeModeNoMomentumRelease');
+        swiper.updateProgress(newPosition);
+        swiper.setTransition(momentumDuration);
+        swiper.setTranslate(newPosition);
+        swiper.transitionStart(true, swiper.swipeDirection);
+        if (!swiper.animating) {
+          swiper.animating = true;
+          elementTransitionEnd(wrapperEl, function () {
+            if (!swiper || swiper.destroyed) return;
+            swiper.transitionEnd();
+          });
+        }
+      } else {
+        swiper.updateProgress(newPosition);
+      }
+      swiper.updateActiveIndex();
+      swiper.updateSlidesClasses();
+    } else if (params.freeMode.sticky) {
+      swiper.slideToClosest();
+      return;
+    } else if (params.freeMode) {
+      emit('_freeModeNoMomentumRelease');
+    }
+    if (!params.freeMode.momentum || timeDiff >= params.longSwipesMs) {
+      emit('_freeModeStaticRelease');
+      swiper.updateProgress();
+      swiper.updateActiveIndex();
+      swiper.updateSlidesClasses();
+    }
+  }
+  Object.assign(swiper, {
+    freeMode: {
+      onTouchStart: onTouchStart,
+      onTouchMove: onTouchMove,
+      onTouchEnd: onTouchEnd
+    }
+  });
+}
+
+/* eslint-disable class-methods-use-this */
+
+var ANIMATION_DURATION = 1;
+var ANIMATION_STEPS_NUMBER = 25;
+var DIAGRAM_SELECTOR = '[data-role="diagram"]';
+var DIAGRAM_WRAPPER_CLASS = 'performance__diagram-wrapper';
+var DIAGRAM_COLUMN_CLASS = 'performance__diagram-column';
+var DIAGRAM_NUMBER_SELECTOR = '[data-role="number-element"]';
+var DIAGRAM_TEXT_SELECTOR = '[data-role="text-element"]';
+var MOUSE_MOVE_SCALER = 5; // обработчик mousemove будет запускаться на каждое пятое срабатывание
+
+var desktopMediaRule = window.matchMedia('(min-width: 992px)');
+gsapWithCSS.registerPlugin(ScrollTrigger);
+// gsap.registerPlugin(TextPlugin);
+var Performance = /*#__PURE__*/_createClass(function Performance(_ref3) {
+  var _this = this;
+  var component = _ref3.component;
+  _classCallCheck(this, Performance);
+  // eslint-disable-next-line class-methods-use-this
+  _defineProperty(this, "init", function () {
+    var columnValues = _this.columnElements.map(function (element) {
+      return Number(element.dataset.columnValue);
+    });
+    _this.maxColumnValue = Math.max.apply(Math, _toConsumableArray(columnValues));
+    _this.addClassNameToColumnWithMaxValue();
+    _this.columnElements.forEach(function (element) {
+      if (_this.columnElements.length <= 6) {
+        element.classList.add("js--total-".concat(_this.columnElements.length));
+      }
+    });
+    if (_this.columnElements.length <= 6) {
+      _this.diagramElement.classList.add("js--less-than-7");
+    }
+    var slidesPerView = Math.min(_this.columnElements.length <= 10 ? _this.columnElements.length : 8.5);
+    var sliderPerViewMobile = Math.min(_this.columnElements.length <= 3 ? _this.columnElements.length : 3);
+    var sliderPerViewTablet = Math.min(_this.columnElements.length <= 5 ? _this.columnElements.length : 5);
+    var spaceBetween = 20 + 20 * (1 - Math.min(_this.columnElements.length / 10, 1));
+    _this.swiper = new Swiper(_this.diagramElement, {
+      modules: [freeMode],
+      wrapperClass: DIAGRAM_WRAPPER_CLASS,
+      slideClass: DIAGRAM_COLUMN_CLASS,
+      slidesPerView: sliderPerViewMobile,
+      spaceBetween: 7,
+      allowTouchMove: true,
+      breakpoints: {
+        992: {
+          allowTouchMove: false,
+          slidesPerView: slidesPerView,
+          spaceBetween: spaceBetween
+        },
+        540: {
+          allowTouchMove: true,
+          slidesPerView: sliderPerViewTablet,
+          spaceBetween: 16
+        }
+      },
+      on: {
+        afterInit: function afterInit(self) {
+          var _this$maxColumnIndex;
+          self.slideTo((_this$maxColumnIndex = _this.maxColumnIndex) !== null && _this$maxColumnIndex !== void 0 ? _this$maxColumnIndex : 0, 0);
+        }
+      }
+    });
+    _this.scrollTrigger = ScrollTrigger.create({
+      trigger: _this.diagramElement,
+      start: 'bottom-=20% bottom',
+      end: 'top+=60% top',
+      onEnterBack: _this.animateDiagram,
+      onEnter: _this.animateDiagram
+    });
+    _this.diagramElement.addEventListener('mousemove', _this.moveSliderByMouse);
+    _this.animationDesktopDiagramNumber();
+  });
+  _defineProperty(this, "addClassNameToColumnWithMaxValue", function () {
+    _this.columnElements.forEach(function (columnElement, index) {
+      if (String(columnElement.dataset.columnValue) === String(_this.maxColumnValue)) {
+        columnElement.classList.add(CLASSES.MAX);
+        _this.maxColumnIndex = index;
+      }
+    });
+  });
+  _defineProperty(this, "moveSliderByMouse", function (_ref4) {
+    var target = _ref4.currentTarget,
+      clientX = _ref4.clientX;
+    if (desktopMediaRule.matches) {
+      if (_this.mouseMoveCount === MOUSE_MOVE_SCALER) {
+        var _target$getBoundingCl = target.getBoundingClientRect(),
+          width = _target$getBoundingCl.width,
+          left = _target$getBoundingCl.left;
+        var x = (clientX - left) / width;
+        gsapWithCSS.to(_this.sliderWrapper, {
+          x: x * (_this.swiper.width - _this.swiper.virtualSize),
+          duration: 1.5
+        });
+        _this.mouseMoveCount = 0;
+      } else {
+        _this.mouseMoveCount += 1;
+      }
+    }
+  });
+  _defineProperty(this, "animateNumber", function (numberElement) {
+    var columnValue = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+    var step = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
+    var unStep = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
+    var currentValue = Number.parseFloat(numberElement.textContent) || 0;
+    var directionStep = unStep ? -step : step;
+    var newValue = currentValue + directionStep;
+    numberElement.textContent = String(newValue.toFixed(1)); // Форматируем число с 1 цифрой после запятой
+
+    if (unStep && newValue > columnValue || !unStep && newValue < columnValue) {
+      setTimeout(function () {
+        _this.animateNumber(numberElement, columnValue, step, unStep);
+      }, ANIMATION_DURATION / ANIMATION_STEPS_NUMBER * 1000);
+    } else {
+      numberElement.textContent = String(columnValue.toFixed(1));
+    }
+  });
+  // animateColumn = (columnElement, columnValue, reduce = false) => {
+  // 	const sectionAffiliate = document.querySelector('[data-role="section-affiliate"]');
+  // 	const numberElement = columnElement.querySelector(DIAGRAM_NUMBER_SELECTOR);
+  // 	// const performanceDiagramCard = document.querySelector('.preformance__end');
+  // 	const countedElementHeight = 70 * (Number(columnValue) / Number(this.maxColumnValue));
+  //
+  // 	if (countedElementHeight < 10) {
+  // 		columnElement.classList.add(`js--less-than-10-percents`);
+  // 		// const numberElement = columnElement.querySelector(DIAGRAM_NUMBER_SELECTOR);
+  // 	}
+  // 	gsap.to(columnElement, {
+  // 		duration: 1,
+  // 		height: reduce ? '14%' : `${countedElementHeight > 0 ? countedElementHeight : 0}%`,
+  // 		// height: `${countedElementHeight > 0 ? countedElementHeight : 0}%`,
+  // 		// markers: true,
+  // 	});
+  //
+  // 	const gsapMatchMediaRule = gsap.matchMedia();
+  // 	gsapMatchMediaRule.add(`(min-width: ${BREAKPOINTS.DESKTOP_MD}px)`, () => {
+  // 		gsap.to(columnElement, {
+  // 			scrollTrigger: {
+  // 				trigger: sectionAffiliate,
+  // 				start: 'top 50%',
+  // 			},
+  // 			onStart: () => {
+  // 				this.animateNumber(numberElement, 0, 1, true);
+  // 				this.animateColumn(columnElement, columnValue, true);
+  // 			},
+  // 		});
+  // 	});
+  // };
+  _defineProperty(this, "animateColumn", function (columnElement, columnValue) {
+    var reduce = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+    // Флаг для предотвращения рекурсии
+    if (columnElement.classList.contains('js--is-animating')) {
+      return; // Если анимация уже идет, выходим из функции
+    }
+
+    // Устанавливаем флаг, что анимация начинается
+    columnElement.classList.add('js--is-animating');
+
+    // Определяем константы для значений
+    var MAX_HEIGHT = 70; // Максимальная высота
+    var REDUCED_HEIGHT = '14%'; // Сниженная высота для reduce = true
+
+    // Вычисляем высоту колонки в зависимости от reduce
+    var finalHeight;
+    if (reduce) {
+      // Когда reduce = true, колонка должна уменьшаться до 14%
+      // Даже если колонка уже уменьшена до 14%, анимация должна произойти заново.
+      finalHeight = REDUCED_HEIGHT;
+    } else {
+      // Когда reduce = false, высота рассчитывается как процент от maxColumnValue
+      var _columnHeight = Number(columnValue) / Number(_this.maxColumnValue) * MAX_HEIGHT;
+      finalHeight = "".concat(Math.max(_columnHeight, 0), "%"); // Гарантируем, что высота не станет отрицательной
+    }
+    var columnHeight = Number(columnValue) / Number(_this.maxColumnValue) * MAX_HEIGHT;
+    if (columnHeight < 10) {
+      columnElement.classList.add('js--less-than-10-percents');
+    }
+    gsapWithCSS.to(columnElement, {
+      height: finalHeight,
+      duration: 0.8,
+      onStart: function onStart() {
+        if (reduce) {
+          columnElement.style.height = finalHeight;
+        }
+      },
+      onComplete: function onComplete() {
+        // По завершению анимации убираем флаг
+        columnElement.classList.remove('js--is-animating');
+      }
+    }).invalidate();
+  });
+  _defineProperty(this, "animationDesktopDiagramNumber", function () {
+    var gsapMatchMediaRule = gsapWithCSS.matchMedia();
+    gsapMatchMediaRule.add("(min-width: ".concat(BREAKPOINTS.DESKTOP_MD, "px)"), function () {
+      var sectionAffiliate = document.querySelector('[data-role="section-affiliate"]');
+      var performanceDiagramCard = document.querySelector('.preformance__end');
+
+      // eslint-disable-next-line no-unused-vars,unicorn/consistent-function-scoping
+      var animationColumnDesktop = function animationColumnDesktop(columnElement, columnValue, progress) {
+        var countedElementHeight = 70 * (Number(columnValue) / Number(_this.maxColumnValue) * (1 - progress));
+        gsapWithCSS.to(columnElement, {
+          duration: 0,
+          height: "".concat(countedElementHeight > 0 ? countedElementHeight : 0, "%")
+        });
+      };
+      var animationNumberDesktop = function animationNumberDesktop(numberElement, columnValue, progress) {
+        var currentValue = Math.round(columnValue * (1 - progress) * 10) / 10;
+        gsapWithCSS.to(numberElement, {
+          duration: 0,
+          textContent: currentValue * 10 / 10,
+          ease: 'power2.out'
+        });
+      };
+      gsapWithCSS.to(performanceDiagramCard, {
+        width: '50%',
+        duration: 4,
+        ease: 'power2.inOut',
+        scrollTrigger: {
+          trigger: sectionAffiliate,
+          start: 'top bottom',
+          end: 'top 60%',
+          scrub: true,
+          onUpdate: function onUpdate(self) {
+            _this.columnElements.forEach(function (columnElement) {
+              var numberElement = columnElement.querySelector(DIAGRAM_NUMBER_SELECTOR);
+              var columnValue = Number(columnElement.dataset.columnValue);
+              animationColumnDesktop(columnElement, columnValue, self.progress);
+              animationNumberDesktop(numberElement, columnValue, self.progress);
+            });
+          }
+        }
+      });
+    });
+  });
+  _defineProperty(this, "animateDiagram", function () {
+    _this.columnElements.forEach(function (columnElement) {
+      var numberElement = columnElement.querySelector(DIAGRAM_NUMBER_SELECTOR);
+      var textElement = columnElement.querySelector(DIAGRAM_TEXT_SELECTOR);
+      var columnValue = Number(columnElement.dataset.columnValue);
+      _this.animateColumn(columnElement, columnValue, false, numberElement, textElement);
+      _this.animateNumber(numberElement, columnValue);
+    });
+    _this.scrollTrigger.kill();
+  });
+  this.component = component;
+  this.diagramElement = component.querySelector(DIAGRAM_SELECTOR);
+  this.swiper = undefined;
+  this.columnElements = _toConsumableArray(component.querySelectorAll(".".concat(DIAGRAM_COLUMN_CLASS)));
+  this.numberElements = _toConsumableArray(component.querySelectorAll(DIAGRAM_NUMBER_SELECTOR));
+  this.sliderWrapper = component.querySelector(".".concat(DIAGRAM_WRAPPER_CLASS));
+  this.scrollTrigger = undefined;
+  this.isNumbersAnimated = false;
+  this.maxColumnValue = undefined;
+  this.maxColumnIndex = undefined;
+  this.mouseMoveCount = 0;
+});
+insertStyles(styles);
+var COMPONENT_SELECTOR = '[data-component-id="performance"]';
+var components = document.querySelectorAll(COMPONENT_SELECTOR);
+components.forEach(function (component) {
+  var performanceInstance = new Performance({
+    component: component
+  });
+  performanceInstance.init();
+});

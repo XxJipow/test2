@@ -1,0 +1,573 @@
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+import { i as insertStyles } from '../../assets/scripts/swiper-core-875fc69d.js';
+import { g as getRandomId, A as Accordions } from '../../assets/scripts/index-d26a61ef.js';
+import '../../assets/scripts/index-6f1bec77.js';
+var CLASSES = {
+  ACTIVE: "js--active",
+  UNACTIVE: "js--unactive",
+  VISIBLE: "js--visible"
+};
+var __defProp = Object.defineProperty;
+var __defNormalProp = function __defNormalProp(obj, key, value) {
+  return key in obj ? __defProp(obj, key, {
+    enumerable: true,
+    configurable: true,
+    writable: true,
+    value: value
+  }) : obj[key] = value;
+};
+var __publicField = function __publicField(obj, key, value) {
+  __defNormalProp(obj, _typeof(key) !== "symbol" ? key + "" : key, value);
+  return value;
+};
+var __accessCheck = function __accessCheck(obj, member, msg) {
+  if (!member.has(obj)) throw TypeError("Cannot " + msg);
+};
+var __privateGet = function __privateGet(obj, member, getter) {
+  __accessCheck(obj, member, "read from private field");
+  return getter ? getter.call(obj) : member.get(obj);
+};
+var __privateAdd = function __privateAdd(obj, member, value) {
+  if (member.has(obj)) throw TypeError("Cannot add the same private member more than once");
+  member instanceof WeakSet ? member.add(obj) : member.set(obj, value);
+};
+var __privateSet = function __privateSet(obj, member, value, setter) {
+  __accessCheck(obj, member, "write to private field");
+  setter ? setter.call(obj, value) : member.set(obj, value);
+  return value;
+};
+var _tabpanelsListSelector, _tabbuttonsListSelector, _deletableTabs, _autoplay, _autoplayTimeout, _listenersAdded, _equalHeight, _destroyed, _inited, _defaultRoles, _defaultSelectors;
+var KEYS = {
+  END: "End",
+  HOME: "Home",
+  LEFT: "ArrowLeft",
+  UP: "ArrowUp",
+  RIGHT: "ArrowRight",
+  DOWN: "ArrowDown",
+  DELETE: "Delete",
+  ENTER: "Enter",
+  SPACE: " "
+};
+var CUSTOM_CLASSES = {
+  TAB: "js--tab",
+  PANEL: "js--panel",
+  TABS_WRAPPER: "js--tabs-wrapper",
+  TAB_LIST: "js--tab-list",
+  PANEL_LIST: "js--panel-list",
+  ANIMATED_FADE: "js--animated-fade",
+  ANIMATED_OPACITY: "js--animated-opacity",
+  ANIMATED_SLIDE: "js--animated-slide"
+};
+var getChildrenArray = function getChildrenArray(element) {
+  return element ? Array.prototype.slice.call(element.children) : [];
+};
+var TriggerEvents;
+(function (TriggerEvents2) {
+  TriggerEvents2["click"] = "click";
+  TriggerEvents2["mouseover"] = "mouseover";
+})(TriggerEvents || (TriggerEvents = {}));
+var Tabs = /*#__PURE__*/function () {
+  function Tabs() {
+    var _this = this;
+    var tabsWrapper = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '[data-tabs="wrapper"]';
+    var _ref = arguments.length > 1 ? arguments[1] : undefined,
+      _ref$tabbuttonsListSe = _ref.tabbuttonsListSelector,
+      tabbuttonsListSelector = _ref$tabbuttonsListSe === void 0 ? '[data-tabs="tabs"]' : _ref$tabbuttonsListSe,
+      _ref$tabpanelsListSel = _ref.tabpanelsListSelector,
+      tabpanelsListSelector = _ref$tabpanelsListSel === void 0 ? '[data-tabs="content"]' : _ref$tabpanelsListSel,
+      _ref$deletableTabs = _ref.deletableTabs,
+      deletableTabs = _ref$deletableTabs === void 0 ? false : _ref$deletableTabs,
+      _ref$initialTab = _ref.initialTab,
+      initialTab = _ref$initialTab === void 0 ? 0 : _ref$initialTab,
+      _ref$equalHeight = _ref.equalHeight,
+      equalHeight = _ref$equalHeight === void 0 ? false : _ref$equalHeight,
+      _ref$orientation = _ref.orientation,
+      orientation = _ref$orientation === void 0 ? "horizontal" : _ref$orientation,
+      _ref$triggerEvent = _ref.triggerEvent,
+      triggerEvent = _ref$triggerEvent === void 0 ? TriggerEvents.click : _ref$triggerEvent,
+      _ref$autoplay = _ref.autoplay,
+      autoplay = _ref$autoplay === void 0 ? {
+        delay: 0
+      } : _ref$autoplay,
+      _ref$on = _ref.on,
+      on = _ref$on === void 0 ? {} : _ref$on,
+      matchMediaRule = _ref.matchMediaRule;
+    _classCallCheck(this, Tabs);
+    __privateAdd(this, _tabpanelsListSelector, void 0);
+    __privateAdd(this, _tabbuttonsListSelector, void 0);
+    __publicField(this, "activeIndex");
+    __publicField(this, "nextIndex");
+    __publicField(this, "prevIndex");
+    __publicField(this, "lastIndex");
+    __privateAdd(this, _deletableTabs, void 0);
+    __publicField(this, "orientation");
+    __publicField(this, "triggerEvent");
+    __privateAdd(this, _autoplay, void 0);
+    __privateAdd(this, _autoplayTimeout, void 0);
+    __privateAdd(this, _listenersAdded, void 0);
+    __publicField(this, "generatedId");
+    __privateAdd(this, _equalHeight, void 0);
+    __publicField(this, "tabsWrapper");
+    __publicField(this, "tabButtonsList");
+    __publicField(this, "tabPanelsList");
+    __publicField(this, "tabs");
+    __publicField(this, "panels");
+    __publicField(this, "on");
+    __privateAdd(this, _destroyed, void 0);
+    __privateAdd(this, _inited, void 0);
+    __privateAdd(this, _defaultRoles, void 0);
+    __privateAdd(this, _defaultSelectors, void 0);
+    __publicField(this, "matchMediaRule");
+    __publicField(this, "isInMatchMedia");
+    __publicField(this, "checkMatchMedia", function () {
+      _this.isInMatchMedia = !_this.matchMediaRule || window.matchMedia(_this.matchMediaRule).matches;
+    });
+    __publicField(this, "setEqualHeight", function () {
+      _this.panels.forEach(function (element) {
+        element.style.height = "auto";
+      });
+      var maxHeight = Math.max.apply(Math, _toConsumableArray(_this.panels.map(function (element) {
+        return element.offsetHeight;
+      })));
+      _this.panels.forEach(function (element) {
+        element.style.height = "".concat(maxHeight, "px");
+      });
+    });
+    __publicField(this, "goTo", function (index2) {
+      var setFocus = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+      if (_this.activeIndex !== index2 || !__privateGet(_this, _inited)) {
+        _this.activeIndex = index2;
+        _this.updateProperties();
+        _this.setUnactiveAll();
+        _this.setActiveAttributes(index2);
+        _this.setActiveClasses(index2);
+        if (setFocus) {
+          _this.focusTab(index2);
+        }
+        if (_this.on.tabChange) {
+          _this.on.tabChange(_this);
+        }
+      }
+    });
+    __publicField(this, "goToNext", function () {
+      _this.goTo(_this.nextIndex);
+    });
+    __publicField(this, "goToPrev", function () {
+      _this.goTo(_this.prevIndex);
+    });
+    __publicField(this, "stopAutoPlay", function () {
+      clearTimeout(__privateGet(_this, _autoplayTimeout));
+    });
+    __publicField(this, "changeTriggerEvent", function (eventName) {
+      if (eventName in TriggerEvents) {
+        _this.removeListenersForTabs();
+        _this.triggerEvent = eventName;
+        _this.addListenersForTabs();
+      } else {
+        console.error("Icorrect type of event");
+      }
+    });
+    __publicField(this, "runAutoPlay", function () {
+      __privateSet(_this, _autoplayTimeout, setTimeout(function () {
+        _this.goTo(_this.nextIndex, false);
+        _this.runAutoPlay();
+      }, __privateGet(_this, _autoplay).delay));
+    });
+    __publicField(this, "addListenersForTabs", function () {
+      _this.tabsWrapper.addEventListener(_this.triggerEvent, _this.clickHandler);
+      window.addEventListener("keydown", _this.keydownHandler);
+    });
+    __publicField(this, "removeListenersForTabs", function () {
+      _this.tabsWrapper.removeEventListener(_this.triggerEvent, _this.clickHandler);
+      window.removeEventListener("keydown", _this.keydownHandler);
+    });
+    __publicField(this, "clickHandler", function (event) {
+      if (_this.isInMatchMedia) {
+        _this.stopAutoPlay();
+        var _this$getEventDetails = _this.getEventDetails(event),
+          targetIndex = _this$getEventDetails.targetIndex,
+          targetButton = _this$getEventDetails.targetButton;
+        if (targetIndex !== void 0 && _this.tabs.includes(targetButton)) {
+          _this.goTo(+targetIndex);
+        }
+      }
+    });
+    __publicField(this, "keydownHandler", function (event) {
+      if (_this.isInMatchMedia) {
+        var eventDetails = _this.getEventDetails(event);
+        var targetButton = eventDetails.targetButton,
+          targetIndex = eventDetails.targetIndex,
+          key = eventDetails.key;
+        if (targetButton && targetIndex !== void 0 && _this.tabs.includes(targetButton)) {
+          _this.stopAutoPlay();
+          switch (key) {
+            case KEYS.LEFT:
+            case KEYS.RIGHT:
+              {
+                event.preventDefault();
+                if (_this.orientation === "horizontal") {
+                  _this.switchTabOnArrowPress(eventDetails);
+                }
+                break;
+              }
+            case KEYS.UP:
+            case KEYS.DOWN:
+              {
+                event.preventDefault();
+                if (_this.orientation === "vertical") {
+                  _this.switchTabOnArrowPress(eventDetails);
+                }
+                break;
+              }
+            case KEYS.DELETE:
+              {
+                event.preventDefault();
+                _this.deleteTab(eventDetails);
+                break;
+              }
+            case KEYS.ENTER:
+              {
+                event.preventDefault();
+                _this.goTo(+targetIndex);
+                break;
+              }
+            case KEYS.SPACE:
+              {
+                event.preventDefault();
+                targetButton.click();
+                break;
+              }
+            case KEYS.END:
+              {
+                event.preventDefault();
+                _this.focusTab(_this.lastIndex);
+                break;
+              }
+            case KEYS.HOME:
+              {
+                event.preventDefault();
+                _this.focusTab(0);
+                break;
+              }
+          }
+        }
+      }
+    });
+    __publicField(this, "setUnactiveAll", function () {
+      _this.setUnactiveAttributesAll();
+      [_this.tabs, _this.panels].flat().forEach(function (element) {
+        element.classList.remove(CLASSES.ACTIVE);
+        element.classList.add(CLASSES.UNACTIVE);
+      });
+    });
+    __publicField(this, "setUnactiveAttributesAll", function () {
+      _this.tabs.forEach(function (tabElement) {
+        tabElement.setAttribute("tabindex", "-1");
+        tabElement.setAttribute("aria-selected", "false");
+      });
+      _this.panels.forEach(function (tabpanel) {
+        tabpanel.setAttribute("inert", "true");
+      });
+    });
+    __publicField(this, "setActiveAttributes", function (index2) {
+      _this.tabs[index2].setAttribute("tabindex", "0");
+      _this.tabs[index2].setAttribute("aria-selected", "true");
+      _this.panels[index2].removeAttribute("inert");
+    });
+    __publicField(this, "setActiveClasses", function (index2) {
+      _this.tabs[index2].classList.remove(CLASSES.UNACTIVE);
+      _this.tabs[index2].classList.add(CLASSES.ACTIVE);
+      _this.panels[index2].classList.remove(CLASSES.UNACTIVE);
+      _this.panels[index2].classList.add(CLASSES.ACTIVE);
+    });
+    __publicField(this, "focusTab", function (order) {
+      _this.tabs[order].focus();
+    });
+    __publicField(this, "switchTabOnArrowPress", function (eventDetails) {
+      var key = eventDetails.key,
+        targetIndex = eventDetails.targetIndex,
+        event = eventDetails.event;
+      event.preventDefault();
+      switch (key) {
+        case KEYS.LEFT:
+        case KEYS.UP:
+          {
+            if (targetIndex !== void 0) {
+              var nextIndex = targetIndex - 1 < 0 ? Number(_this.lastIndex) : targetIndex - 1;
+              if (_this.triggerEvent === TriggerEvents.mouseover) {
+                _this.goTo(nextIndex);
+              } else {
+                _this.focusTab(nextIndex);
+              }
+            }
+            break;
+          }
+        case KEYS.RIGHT:
+        case KEYS.DOWN:
+          {
+            if (targetIndex !== void 0) {
+              var _nextIndex = targetIndex >= Number(_this.lastIndex) ? 0 : targetIndex + 1;
+              if (_this.triggerEvent === TriggerEvents.mouseover) {
+                _this.goTo(_nextIndex);
+              } else {
+                _this.focusTab(_nextIndex);
+              }
+            }
+            break;
+          }
+      }
+    });
+    __publicField(this, "deleteTab", function (eventDetails) {
+      var targetButton = eventDetails.targetButton,
+        targetIndex = eventDetails.targetIndex;
+      if (targetButton.dataset.deletable === "true" && targetIndex !== void 0) {
+        _this.tabs[targetIndex].remove();
+        _this.panels[targetIndex].remove();
+        _this.update();
+        if (_this.tabs.length > 0 && _this.panels.length > 0) {
+          var newTabsLength = _this.tabs.length - 1;
+          if (targetIndex < _this.activeIndex || _this.activeIndex > newTabsLength) {
+            _this.goTo(_this.activeIndex - 1);
+          } else {
+            _this.goTo(_this.activeIndex);
+          }
+        }
+      }
+    });
+    __publicField(this, "assignTabsAttributes", function () {
+      var _a, _b;
+      _this.tabsWrapper.classList.add(CUSTOM_CLASSES.TABS_WRAPPER);
+      _this.tabsWrapper.setAttribute("aria-orientation", _this.orientation);
+      (_a = _this.tabButtonsList) == null ? void 0 : _a.classList.add(CUSTOM_CLASSES.TAB_LIST);
+      (_b = _this.tabPanelsList) == null ? void 0 : _b.classList.add(CUSTOM_CLASSES.PANEL_LIST);
+      _this.tabs.forEach(function (tab, index2) {
+        tab.classList.add(CUSTOM_CLASSES.TAB);
+        tab.setAttribute("aria-label", "".concat(index2));
+        tab.setAttribute("role", __privateGet(_this, _defaultRoles).tab);
+        tab.setAttribute("id", "".concat(_this.generatedId, "-tab-").concat(index2));
+        tab.setAttribute("aria-controls", "".concat(_this.generatedId, "-tabpanel-").concat(index2));
+        tab.dataset.deletable = "".concat(__privateGet(_this, _deletableTabs));
+        _this.panels[index2].classList.add(CUSTOM_CLASSES.PANEL);
+        _this.panels[index2].setAttribute("aria-labelledby", "".concat(_this.generatedId, "-tab-").concat(index2));
+        _this.panels[index2].setAttribute("id", "".concat(_this.generatedId, "-tabpanel-").concat(index2));
+        _this.panels[index2].setAttribute("aria-label", "".concat(index2));
+        _this.panels[index2].setAttribute("role", __privateGet(_this, _defaultRoles).tabpanel);
+      });
+      _this.setUnactiveAll();
+    });
+    __publicField(this, "removeTabsAttributes", function () {
+      var _a, _b;
+      _this.tabsWrapper.classList.remove(CUSTOM_CLASSES.TABS_WRAPPER);
+      _this.tabsWrapper.removeAttribute("aria-orientation");
+      (_a = _this.tabButtonsList) == null ? void 0 : _a.classList.remove(CUSTOM_CLASSES.TAB_LIST);
+      (_b = _this.tabPanelsList) == null ? void 0 : _b.classList.remove(CUSTOM_CLASSES.PANEL_LIST);
+      _this.tabs.forEach(function (tab, index2) {
+        tab.classList.remove(CUSTOM_CLASSES.TAB);
+        tab.classList.remove(CLASSES.ACTIVE);
+        tab.classList.remove(CLASSES.UNACTIVE);
+        tab.removeAttribute("tabindex");
+        tab.removeAttribute("aria-label");
+        tab.removeAttribute("aria-selected");
+        tab.removeAttribute("role");
+        tab.removeAttribute("id");
+        tab.removeAttribute("aria-controls");
+        delete tab.dataset.deletable;
+        _this.panels[index2].classList.remove(CUSTOM_CLASSES.PANEL);
+        _this.panels[index2].classList.remove(CLASSES.ACTIVE);
+        _this.panels[index2].classList.remove(CLASSES.UNACTIVE);
+        _this.panels[index2].removeAttribute("aria-labelledby");
+        _this.panels[index2].removeAttribute("id");
+        _this.panels[index2].removeAttribute("aria-label");
+        _this.panels[index2].removeAttribute("role");
+        _this.panels[index2].removeAttribute("inert");
+      });
+    });
+    __publicField(this, "getEventDetails", function (event) {
+      var key = event instanceof KeyboardEvent ? event.key : void 0;
+      var target = event.target;
+      var targetTab = target.closest(__privateGet(_this, _defaultSelectors).tab);
+      var targetIndex = targetTab == null ? void 0 : targetTab.getAttribute("aria-label");
+      return {
+        target: target,
+        targetIndex: targetIndex ? +targetIndex : void 0,
+        targetButton: targetTab,
+        key: key,
+        event: event
+      };
+    });
+    __publicField(this, "updateProperties", function () {
+      _this.lastIndex = _this.tabs.length - 1;
+      _this.nextIndex = _this.activeIndex >= _this.lastIndex ? 0 : _this.activeIndex + 1;
+      _this.prevIndex = _this.activeIndex - 1 < 0 ? _this.lastIndex : _this.activeIndex - 1;
+    });
+    __publicField(this, "update", function () {
+      _this.tabs = getChildrenArray(_this.tabButtonsList);
+      _this.panels = getChildrenArray(_this.tabPanelsList);
+      _this.updateProperties();
+      _this.assignTabsAttributes();
+    });
+    __publicField(this, "destroy", function () {
+      _this.removeTabsAttributes();
+      _this.removeListenersForTabs();
+      window.removeEventListener("resize", _this.setEqualHeight);
+      __privateSet(_this, _destroyed, true);
+    });
+    __privateSet(this, _tabpanelsListSelector, tabpanelsListSelector);
+    __privateSet(this, _tabbuttonsListSelector, tabbuttonsListSelector);
+    __privateSet(this, _deletableTabs, deletableTabs);
+    this.tabsWrapper = typeof tabsWrapper === "string" ? document.querySelector(tabsWrapper) : tabsWrapper;
+    this.tabButtonsList = void 0;
+    this.tabPanelsList = void 0;
+    this.tabButtonsList = void 0;
+    this.tabs = [];
+    this.panels = [];
+    this.orientation = orientation === "vertical" ? "vertical" : "horizontal";
+    this.triggerEvent = triggerEvent;
+    this.activeIndex = initialTab;
+    this.nextIndex = void 0;
+    this.prevIndex = void 0;
+    this.lastIndex = void 0;
+    __privateSet(this, _autoplay, autoplay);
+    __privateSet(this, _autoplayTimeout, 0);
+    __privateSet(this, _listenersAdded, false);
+    this.on = on;
+    this.matchMediaRule = matchMediaRule;
+    this.isInMatchMedia = false;
+    this.generatedId = getRandomId();
+    __privateSet(this, _equalHeight, equalHeight);
+    __privateSet(this, _defaultRoles, {
+      tab: "tab",
+      tabpanel: "tabpanel"
+    });
+    __privateSet(this, _defaultSelectors, {
+      tab: '[role="tab"]',
+      tabpanel: '[role="tabpanel"]'
+    });
+    __privateSet(this, _destroyed, false);
+    __privateSet(this, _inited, false);
+    this.init();
+  }
+  return _createClass(Tabs, [{
+    key: "init",
+    value: function init() {
+      if (this.tabsWrapper && !__privateGet(this, _destroyed)) {
+        if (this.on.beforeInit) {
+          this.on.beforeInit(this);
+        }
+        this.checkMatchMedia();
+        window.addEventListener("resize", this.checkMatchMedia);
+        this.tabButtonsList = this.tabsWrapper.querySelector(__privateGet(this, _tabbuttonsListSelector));
+        this.tabPanelsList = this.tabsWrapper.querySelector(__privateGet(this, _tabpanelsListSelector));
+        if (this.tabButtonsList && this.tabPanelsList) {
+          this.tabs = getChildrenArray(this.tabButtonsList);
+          this.panels = getChildrenArray(this.tabPanelsList);
+          if (this.tabs.length > 0 && this.tabs.length === this.panels.length) {
+            if (__privateGet(this, _equalHeight)) {
+              this.setEqualHeight();
+              window.addEventListener("resize", this.setEqualHeight);
+            }
+            this.assignTabsAttributes();
+            if (!__privateGet(this, _listenersAdded)) {
+              this.addListenersForTabs();
+              __privateSet(this, _listenersAdded, true);
+            }
+            this.goTo(this.activeIndex, false);
+            if (__privateGet(this, _autoplay).delay > 0 && this.isInMatchMedia) {
+              this.runAutoPlay();
+            }
+          } else {
+            throw new Error("Tabs and panels should have the length > 0. And their lengths should be equal");
+          }
+        } else {
+          throw new Error("Tabs or panels not found");
+        }
+        __privateSet(this, _inited, true);
+        if (this.on.afterInit) {
+          this.on.afterInit(this);
+        }
+      }
+    }
+  }]);
+}();
+_tabpanelsListSelector = new WeakMap();
+_tabbuttonsListSelector = new WeakMap();
+_deletableTabs = new WeakMap();
+_autoplay = new WeakMap();
+_autoplayTimeout = new WeakMap();
+_listenersAdded = new WeakMap();
+_equalHeight = new WeakMap();
+_destroyed = new WeakMap();
+_inited = new WeakMap();
+_defaultRoles = new WeakMap();
+_defaultSelectors = new WeakMap();
+
+/* eslint-disable no-param-reassign */
+var Faq = /*#__PURE__*/_createClass(function Faq(_ref2) {
+  var _this2 = this;
+  var component = _ref2.component;
+  _classCallCheck(this, Faq);
+  // eslint-disable-next-line class-methods-use-this
+  _defineProperty(this, "init", function () {
+    _this2.accordions = new Accordions({
+      parentElement: _this2.component,
+      isSingle: true,
+      accordionSelector: '[data-role="accordion"]',
+      itemSelector: '[data-role="accordion-item"]',
+      summarySelector: '[data-role="accordion-summary"]',
+      detailsSelector: '[data-role="accordion-details"]'
+    });
+    var tabsWrapper = _this2.component.querySelector('[data-tabs="wrapper"]');
+    _this2.tabs = new Tabs(tabsWrapper, {
+      tabbuttonsListSelector: '[data-tabs="tabs"]',
+      tabpanelsListSelector: '[data-tabs="content"]',
+      orientation: 'vertical',
+      on: {
+        tabChange: function tabChange(self) {
+          _this2.correctPanelsWrapperHeight(self);
+        },
+        afterInit: function afterInit(self) {
+          _this2.correctPanelsWrapperHeight(self);
+        }
+      }
+    });
+    window.addEventListener('resize', function () {
+      var curentDocumntWidth = document.documentElement.clientWidth;
+      if (curentDocumntWidth !== _this2.memoizedDocumentWidth) {
+        _this2.correctPanelsWrapperHeight();
+        _this2.memoizedDocumentWidth = curentDocumntWidth;
+      }
+    });
+  });
+  _defineProperty(this, "correctPanelsWrapperHeight", function () {
+    var self = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _this2.tabs;
+    // console.log('correct');
+    var activeElementHeight = self.panels[self.activeIndex].offsetHeight;
+    self.tabPanelsList.style.height = "".concat(activeElementHeight, "px");
+  });
+  this.component = component;
+  this.accordions = undefined;
+  this.tabs = undefined;
+  this.memoizedDocumentWidth = document.documentElement.clientWidth;
+});
+var styles = "[data-component-id=faq].faq [data-role=accordion-item] {\n  transition: all 0.3s ease 0s;\n}\n[data-component-id=faq].faq [data-role=accordion-item] * {\n  transition: all 0.3s ease 0s;\n}\n[data-component-id=faq].faq [data-role=accordion-item].js--open {\n  background-color: var(--accent);\n  background-size: 10000%;\n  box-shadow: 0 4px 40px transparent;\n  border-radius: 20px;\n  grid-template-rows: max-content 1fr;\n}\n[data-component-id=faq].faq [data-role=accordion-item].js--open .faq-item__overlay {\n  opacity: 0;\n}\n[data-component-id=faq].faq [data-role=accordion-item].js--open [data-role=accordion-summary] {\n  padding-bottom: 1rem;\n}\n[data-component-id=faq].faq [data-role=accordion-item].js--open [data-role=accordion-summary] .gradient-text {\n  background-position-y: 100%;\n  transform: skew(-10deg, 0deg);\n}\n[data-component-id=faq].faq [data-role=accordion-item].js--open [data-role=accordion-details] {\n  opacity: 1;\n  padding-bottom: 2.25rem;\n}\n[data-component-id=faq] [data-tabs=wrapper] * {\n  transition: all 0.3s ease;\n}\n[data-component-id=faq] [data-tabs=wrapper] [data-tabs=tabs] [role=tab].js--active {\n  background-color: var(--accent);\n}\n[data-component-id=faq] [data-tabs=wrapper] [data-tabs=tabs] [role=tab].js--active .faq-tab__overlay {\n  opacity: 0;\n}\n[data-component-id=faq] [data-tabs=wrapper] [data-tabs=tabs] [role=tab].js--active .gradient-text {\n  background-position-y: 100%;\n  transform: skew(-10deg, 0deg);\n}\n[data-component-id=faq] [data-tabs=wrapper] [data-tabs=content] [role=tabpanel].js--active {\n  opacity: 1;\n}";
+insertStyles(styles);
+var COMPONENT_SELECTOR = '[data-component-id="faq"]';
+var components = document.querySelectorAll(COMPONENT_SELECTOR);
+components.forEach(function (component) {
+  var faqInstance = new Faq({
+    component: component
+  });
+  faqInstance.init();
+});

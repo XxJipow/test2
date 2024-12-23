@@ -1,0 +1,277 @@
+/**
+ * This is the global styles file. It MUST be imported in main.js.
+ * Do not white styles here, use _styles directory instead.
+ * */
+/**
+* Highly recommend using css variables instead of sass variables where it is possible.
+* The reasons why:
+* 1. You can not edit a value of sass variable, but you can edit css variable value on media queries.
+*    Example: change color value if theme is dark or --padding-base on small screens.
+* 2. You can read and write css variables using javascript.
+*    Example: use --js-scrollbar-width to set body padding when scroll is locked.
+* 3. You don't have to import css variables to other files to use it.
+* */
+:root {
+  --transition-default: all 0.3s ease 0s;
+  --scrollbar-width: 40px;
+  --js-scrollbar-width: 0px;
+  --scrollbar-thumb-color: var(--accent);
+  --scrollbar-background-color: var(--primary-900);
+}
+* {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+:focus-visible {
+  outline: currentColor solid 1px;
+  outline-offset: 0.25em;
+  transition: var(--transition-default);
+}
+.visually-hidden {
+  position: absolute !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  border: 0 !important;
+  margin: -1px !important;
+  block-size: 1px !important;
+  clip: rect(0, 0, 0, 0) !important;
+  inline-size: 1px !important;
+  white-space: nowrap !important;
+}
+.w-richtext ol,
+.w-richtext ul {
+  overflow: visible;
+}
+.w-richtext > :first-child {
+  margin-block-start: 0;
+}
+.w-richtext > :last-child {
+  margin-block-end: 0;
+}
+.w-webflow-badge {
+  display: none !important;
+}
+body.js--locked {
+  overflow: hidden;
+  padding-inline-end: var(--js-scrollbar-width);
+}
+::-webkit-scrollbar-track {
+  background-color: var(--scrollbar-background-color);
+}
+::-webkit-scrollbar {
+  width: var(--scrollbar-width);
+  background-color: var(--scrollbar-background-color);
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb-color);
+}
+* {
+  scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-background-color);
+  scrollbar-width: thin;
+}
+html, body {
+  scrollbar-width: none !important;
+}
+html::-webkit-scrollbar, body::-webkit-scrollbar {
+  width: 0 !important;
+}
+::selection {
+  -webkit-background-clip: unset !important;
+  background-clip: unset !important;
+  background-color: var(--accent) !important;
+  color: var(--primary-900) !important;
+  -webkit-text-fill-color: var(--primary-900) !important;
+}
+.heading::after {
+  content: "";
+  letter-spacing: 0 !important;
+}
+button, [type=button], [type=reset] {
+  cursor: inherit;
+}
+button, html input[type=button], input[type=reset] {
+  cursor: inherit;
+}
+.button .button__arrow-wrapper svg {
+  transition: all 0.3s ease 0s;
+  flex-shrink: 0;
+  transform: translateX(-5.75rem);
+}
+@media screen and (max-width: 1560px) and (min-width: 992px) {
+  .button .button__arrow-wrapper svg {
+    transform: translateX(-6.15rem);
+  }
+}
+.button .button__arrow-wrapper svg:nth-child(-n+5) {
+  opacity: 0;
+}
+.button:hover .marquee {
+  animation: scroll 3.5s linear infinite;
+  animation-delay: 0.3s;
+}
+.button:hover .button__arrow-wrapper {
+  width: calc(100% - 0.5rem);
+}
+.button:hover .button__arrow-wrapper svg {
+  transform: translateX(0);
+  animation-name: svgcoloranimation;
+  animation-duration: 1.2s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  opacity: 1 !important;
+}
+.button:hover .button__arrow-wrapper svg:nth-child(1) {
+  animation-delay: 0s;
+}
+.button:hover .button__arrow-wrapper svg:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.button:hover .button__arrow-wrapper svg:nth-child(3) {
+  animation-delay: 0.4s;
+}
+.button:hover .button__arrow-wrapper svg:nth-child(4) {
+  animation-delay: 0.6s;
+}
+.button:hover .button__arrow-wrapper svg:nth-child(5) {
+  animation-delay: 0.8s;
+}
+.big-button {
+  transition: transform 0.3s ease, gap 0.2s ease, 0.2s;
+}
+.big-button .big-button__arrow-wrapper svg {
+  transition: all 0.3s ease 0.3s;
+  flex-shrink: 0;
+  transform: translateX(-6.5rem);
+}
+@media screen and (max-width: 1560px) and (min-width: 992px) {
+  .big-button .big-button__arrow-wrapper svg {
+    transform: translateX(-7.25rem);
+  }
+}
+.big-button .big-button__arrow-wrapper svg:nth-child(-n+3) {
+  opacity: 0;
+}
+.big-button .big-button__inner-text {
+  transition: all 0.3s ease 0s, ease 0.1s;
+}
+.big-button:hover .marquee {
+  animation: scroll 3s linear infinite;
+  animation-delay: 0.3s;
+}
+.big-button:hover .big-button__inner-text {
+  opacity: 0;
+  transform: translateY(1.375rem);
+}
+.big-button:hover .big-button__arrow-wrapper {
+  transform: translateY(2.2rem);
+  width: max-content;
+}
+.big-button:hover .big-button__arrow-wrapper[data-feature=small-transform] {
+  transform: translateY(1.5rem);
+}
+.big-button:hover .big-button__arrow-wrapper svg {
+  transform: translateX(0);
+  animation-name: svgcoloranimation;
+  animation-duration: 1.2s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  opacity: 1 !important;
+}
+.big-button:hover .big-button__arrow-wrapper svg:nth-child(1) {
+  animation-delay: 0s;
+}
+.big-button:hover .big-button__arrow-wrapper svg:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.big-button:hover .big-button__arrow-wrapper svg:nth-child(3) {
+  animation-delay: 0.4s;
+}
+.big-button:hover .big-button__arrow-wrapper svg:nth-child(4) {
+  animation-delay: 0.6s;
+}
+.big-button:hover .big-button__arrow-wrapper svg:nth-child(5) {
+  animation-delay: 0.8s;
+}
+@keyframes svgcoloranimation {
+  0% {
+    color: #151515;
+  }
+  50% {
+    color: #9d9d9d;
+  }
+  100% {
+    color: #151515;
+  }
+}
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+a:-webkit-any-link {
+  cursor: inherit;
+}
+textarea {
+  resize: vertical;
+}
+.body [data-accordion-role=item] [data-accordion-role=summary] {
+  cursor: inherit;
+}
+[data-role-figure-parent] .figure {
+  opacity: 0;
+  transform: scale(0);
+  transition: all 0.6s ease-in-out;
+}
+[data-role-figure-parent][data-figure-type=hero] [data-role-figure=hero] {
+  opacity: 1;
+  transform: scale(1);
+}
+[data-role-figure-parent][data-figure-type=how-it-works] [data-role-figure=how-it-works] {
+  opacity: 1;
+  transform: scale(1);
+}
+[data-role-figure-parent][data-figure-type=risk] [data-role-figure=risk] {
+  opacity: 1;
+  transform: scale(1);
+}
+[data-role-figure-parent][data-figure-type=performance] [data-role-figure=performance] {
+  opacity: 1;
+  transform: scale(1);
+}
+[data-role-figure-parent][data-figure-type=affi] [data-role-figure=affi] {
+  opacity: 1;
+  transform: scale(1);
+}
+[data-role-figure-parent][data-figure-type=invest] [data-role-figure=invest] {
+  opacity: 1;
+  transform: scale(1);
+}
+[data-role-figure-parent][data-figure-type=risk-points] [data-role-figure=risk-points] {
+  opacity: 1;
+  transform: scale(1);
+}
+[data-role-figure-parent][data-figure-type=faq] [data-role-figure=faq] {
+  opacity: 1;
+  transform: scale(1);
+}
+.heading-animation__wrapper {
+  contain: layout;
+  perspective: 1000px;
+}
+[data-base-animation-role=title] {
+  transform-origin: 50% 50% -150px !important;
+  will-change: opacity, transform;
+}
+[circle-animation] {
+  animation: rotate 3s linear infinite;
+}
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

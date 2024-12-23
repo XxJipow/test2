@@ -1,0 +1,81 @@
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+import { i as insertStyles } from '../../assets/scripts/swiper-core-875fc69d.js';
+import { g as gsapWithCSS } from '../../assets/scripts/index-8d1c0166.js';
+import { S as ScrollTrigger } from '../../assets/scripts/ScrollTrigger-5ab3e1af.js';
+import { C as CLASSES } from '../../assets/scripts/classes-dbc829bc.js';
+
+/* eslint-disable class-methods-use-this */
+/* eslint-disable unicorn/no-null */
+
+var DIAGRAM_SELECTOR = '[data-role="diagram"]';
+var DIAGRAM_COLUMN_SELECTOR = '[data-role="diagram-column"]';
+var COLUMN_MAX_HEIGHT_IN_PERCENT = 55;
+gsapWithCSS.registerPlugin(ScrollTrigger);
+var AffiliateProgram = /*#__PURE__*/_createClass(function AffiliateProgram(_ref) {
+  var _this = this;
+  var componentElement = _ref.component;
+  _classCallCheck(this, AffiliateProgram);
+  _defineProperty(this, "init", function () {
+    _this.maxDiagramColumnValue = Math.max.apply(Math, _toConsumableArray(_toConsumableArray(_this.componentElement.querySelectorAll(DIAGRAM_COLUMN_SELECTOR)).map(function (element) {
+      return element.dataset.value;
+    })));
+    _this.diagramColumnRelativeHeights = _toConsumableArray(_this.componentElement.querySelectorAll(DIAGRAM_COLUMN_SELECTOR)).map(function (element) {
+      return "".concat(element.dataset.value / _this.maxDiagramColumnValue * COLUMN_MAX_HEIGHT_IN_PERCENT, "%");
+    });
+    _this.addClassNameToColumnWithMaxValue();
+    _this.scrollTriggerInstance = ScrollTrigger.create({
+      trigger: _this.diargamElement,
+      start: 'bottom-=20% bottom',
+      end: 'top+=20% top',
+      onEnter: _this.animateDiagram,
+      onEnterBack: _this.animateDiagram
+    });
+  });
+  _defineProperty(this, "addClassNameToColumnWithMaxValue", function () {
+    _this.diagramColumnElements.forEach(function (columnElement) {
+      if (String(columnElement.dataset.value) === String(_this.maxDiagramColumnValue)) {
+        columnElement.classList.add(CLASSES.MAX);
+      }
+    });
+  });
+  _defineProperty(this, "animateDiagram", function () {
+    _this.diagramColumnElements.forEach(function (columnElement, index) {
+      columnElement.style.height = _this.diagramColumnRelativeHeights[index];
+      setTimeout(function () {
+        _this.addClassNameToColumn(columnElement);
+      }, 500);
+    });
+    _this.scrollTriggerInstance.kill();
+  });
+  _defineProperty(this, "addClassNameToColumn", function (columnElement) {
+    columnElement.classList.add(CLASSES.ACTIVE);
+  });
+  this.componentElement = componentElement;
+  this.diargamElement = componentElement.querySelector(DIAGRAM_SELECTOR);
+  this.diagramColumnElements = componentElement.querySelectorAll(DIAGRAM_COLUMN_SELECTOR);
+  this.maxDiagramColumnValue = undefined;
+  this.diagramColumnRelativeHeights = undefined;
+  this.scrollTriggerInstance = undefined;
+});
+var styles = "[data-component-id=affiliate-program] .affi__column-text-value::after {\n  content: \"%\";\n}\n[data-component-id=affiliate-program] .affi__diagram-inner::after, [data-component-id=affiliate-program] .affi__diagram-inner::before {\n  content: \"\";\n}\n[data-component-id=affiliate-program] .affi__column-overlay {\n  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 100%), url(\"https://uploads-ssl.webflow.com/666fee715ca1ccc9b62e53e0/667eb3c93ba6090408598d9b_mask.svg\");\n  mask-repeat: repeat, no-repeat;\n  mask-size: 100%, 101%;\n  mask-position: 0 0, 0 0;\n  mask-composite: subtract;\n}\n[data-component-id=affiliate-program] .affi__column-right-border-mask {\n  mask-image: linear-gradient(to bottom, rgb(0, 0, 0) 0%, rgb(0, 0, 0) 100%), url(\"https://uploads-ssl.webflow.com/666fee715ca1ccc9b62e53e0/667eb3c93ba6090408598d9b_mask.svg\");\n  mask-repeat: repeat, no-repeat;\n  mask-size: 100%, 101%;\n  mask-position: 0 0, 0 0;\n  mask-composite: subtract;\n}\n[data-component-id=affiliate-program] [data-role=diagram-column] [data-role=left-border-wrapper] {\n  transition: height 0.5s ease 0.5s;\n}\n[data-component-id=affiliate-program] [data-role=diagram-column] [data-role=left-border-wrapper]::before {\n  content: \"\";\n  position: absolute;\n  background-color: var(--primary-0);\n  border-radius: 100vmax;\n  width: 0;\n  height: 0;\n  transition: width 0.5s ease 0.5s, height 0.5s ease 0.5s;\n  top: 0;\n  left: 0;\n  transform: translate(-50%, -50%);\n  z-index: 1;\n}\n[data-component-id=affiliate-program] [data-role=diagram-column] [data-role=column-text] {\n  transition: opacity 0.5s ease 0.5s, transform 0.5s ease 0.5s;\n  opacity: 0;\n}\n[data-component-id=affiliate-program] [data-role=diagram-column].js--active [data-role=column-text] {\n  opacity: 1;\n  transform: translateY(-7rem);\n}\n@media screen and (max-width: 991px) {\n  [data-component-id=affiliate-program] [data-role=diagram-column].js--active [data-role=column-text] {\n    transform: translateY(-3.25rem);\n  }\n}\n@media screen and (max-width: 480px) {\n  [data-component-id=affiliate-program] [data-role=diagram-column].js--active [data-role=column-text] {\n    transform: translateY(-2.25rem);\n  }\n}\n[data-component-id=affiliate-program] [data-role=diagram-column].js--active [data-role=top-border] {\n  width: calc(100% + 1rem);\n}\n@media screen and (max-width: 991px) {\n  [data-component-id=affiliate-program] [data-role=diagram-column].js--active [data-role=top-border] {\n    width: calc(100% + 0.5rem);\n  }\n}\n[data-component-id=affiliate-program] [data-role=diagram-column].js--active [data-role=top-border]::before {\n  width: 0.5rem;\n  height: 0.5rem;\n}\n[data-component-id=affiliate-program] [data-role=diagram-column].js--active [data-role=left-border-wrapper] {\n  height: calc(100% + 6.25rem);\n}\n@media screen and (max-width: 991px) {\n  [data-component-id=affiliate-program] [data-role=diagram-column].js--active [data-role=left-border-wrapper] {\n    height: calc(100% + 2.5rem);\n  }\n}\n@media screen and (max-width: 480px) {\n  [data-component-id=affiliate-program] [data-role=diagram-column].js--active [data-role=left-border-wrapper] {\n    height: calc(100% + 1.75rem);\n  }\n}\n[data-component-id=affiliate-program] [data-role=diagram-column].js--active [data-role=left-border-wrapper]::before {\n  width: 0.5rem;\n  height: 0.5rem;\n}\n[data-component-id=affiliate-program] [data-role=diagram-column].js--active [data-role=top-border]:not(.w-condition-invisible) + [data-role=left-border-wrapper] {\n  height: 100%;\n}\n[data-component-id=affiliate-program] [data-role=diagram-column].js--active [data-role=top-border]:not(.w-condition-invisible) + [data-role=left-border-wrapper]::before {\n  width: 0px;\n  height: 0px;\n}\n[data-component-id=affiliate-program] [data-role=diagram-column].js--active [data-role=top-border]:not(.w-condition-invisible) + [data-role=left-border-wrapper] + [data-role=column-text] {\n  transition: opacity 0.5s ease 0.5s;\n  transform: translate(calc(-100% - 1rem), -0.75rem);\n}\n@media screen and (max-width: 991px) {\n  [data-component-id=affiliate-program] [data-role=diagram-column].js--active [data-role=top-border]:not(.w-condition-invisible) + [data-role=left-border-wrapper] + [data-role=column-text] {\n    width: 200%;\n    transform: translate(calc(-50% - 0.5rem), -0.75rem);\n  }\n}\n[data-component-id=affiliate-program] [data-role=diagram-column].js--max {\n  color: var(--accent);\n}\n[data-component-id=affiliate-program] [data-role=diagram-column].js--max [data-role=top-border] {\n  border-color: var(--accent);\n}\n[data-component-id=affiliate-program] [data-role=diagram-column].js--max [data-role=top-border]::before {\n  background-color: var(--accent);\n}\n[data-component-id=affiliate-program] [data-role=diagram-column].js--max [data-role=left-border-wrapper]::before {\n  background-color: var(--accent);\n}\n[data-component-id=affiliate-program] [data-role=diagram-column].js--max [data-role=column-text] .text {\n  color: var(--accent);\n  background-image: none;\n  -webkit-text-fill-color: unset;\n}\n[data-component-id=affiliate-program] [data-role=diagram-column].js--max [data-role=left-border], [data-component-id=affiliate-program] [data-role=diagram-column].js--max [data-role=center-border], [data-component-id=affiliate-program] [data-role=diagram-column].js--max [data-role=right-border] {\n  border-color: var(--accent);\n  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 100%);\n}\n[data-component-id=affiliate-program] [data-role=diagram-column].js--max .affi__column-overlay {\n  background-color: var(--accent);\n  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%), url(\"https://uploads-ssl.webflow.com/666fee715ca1ccc9b62e53e0/667eb3c93ba6090408598d9b_mask.svg\");\n}";
+insertStyles(styles);
+var COMPONENT_SELECTOR = '[data-component-id="affiliate-program"]';
+var components = document.querySelectorAll(COMPONENT_SELECTOR);
+components.forEach(function (component) {
+  var affiliateProgramInstance = new AffiliateProgram({
+    component: component
+  });
+  affiliateProgramInstance.init();
+});

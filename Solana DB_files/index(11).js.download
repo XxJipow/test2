@@ -1,0 +1,13 @@
+import { M as Marquee } from '../../assets/scripts/index-6f1bec77.js';
+import { i as insertStyles } from '../../assets/scripts/swiper-core-875fc69d.js';
+var styles = "@keyframes marqueeMovingLine {\n  0% {\n    transform: translateX(0);\n  }\n  100% {\n    transform: translateX(-50%);\n  }\n}\n[data-marquee-role=parent] [data-marquee-role=moving-line] {\n  animation-play-state: running;\n  animation-iteration-count: infinite;\n  animation-timing-function: linear;\n}\n[data-marquee-role=parent][data-marquee-state=disabled] [data-marquee-role=moving-line] {\n  animation-name: none;\n}\n[data-marquee-role=parent][data-marquee-state=enabled] {\n  overflow: hidden;\n  display: flex;\n  flex-direction: row;\n  justify-content: start;\n}\n[data-marquee-role=parent][data-marquee-state=enabled] [data-marquee-role=moving-line] {\n  animation-name: marqueeMovingLine;\n  width: max-content;\n}\n[data-marquee-role=parent][data-marquee-state=enabled] [data-marquee-role=list] {\n  display: flex;\n  gap: 0;\n  flex-direction: row;\n  justify-content: start;\n  width: max-content;\n}\n[data-component-id=footer] [data-component-id=animated-element] {\n  opacity: 1 !important;\n}";
+insertStyles(styles);
+var parent = document.querySelector('[data-role="marquee-parent"]');
+var marquee = new Marquee({
+  marqueeParentSelector: '[data-role="marquee-parent"]',
+  marqueeMovingLineSelector: '[data-role="marquee-moving-line"]',
+  marqueeListSelector: '[data-role="marquee-list"]',
+  wrapperOfVisiblePartOfMarquee: parent,
+  matchMediaRule: window.matchMedia('(min-width: 992px)')
+});
+marquee.init();

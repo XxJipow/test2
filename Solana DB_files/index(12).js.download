@@ -1,0 +1,132 @@
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+import { i as insertStyles } from '../../assets/scripts/swiper-core-875fc69d.js';
+import { g as gsapWithCSS } from '../../assets/scripts/index-8d1c0166.js';
+import { l } from '../../assets/scripts/micromodal.es-59f8eecb.js';
+import { C as CLASSES } from '../../assets/scripts/classes-dbc829bc.js';
+import { l as lockScroll, u as unlockScroll } from '../../assets/scripts/scroll-lock-6bff18ed.js';
+var styles = "[data-component-id=modal] {\n  transition: all 0.5s ease-in-out;\n}\n[data-component-id=modal].is-open {\n  opacity: 1;\n  pointer-events: auto;\n  background-color: rgba(21, 21, 21, 0.9019607843);\n  z-index: 1000;\n}\n[data-component-id=modal] [data-role=form].js--loading button[type=submit] {\n  pointer-events: none;\n}\n[data-component-id=modal] .modal__form-outer.mouseenter-close {\n  transform: translate(0px, 0px) rotate(0deg) scale(1.00001, 1.00001) !important;\n  transition: 0.5s all ease;\n}\n[data-component-id=modal] .modal__form-outer.mouseenter-close-transition {\n  transition: 0.5s all ease;\n}\n@media screen and (max-height: 1200px) and (min-width: 992px) {\n  [data-component-id=modal] .modal {\n    transform: translateY(20vh);\n  }\n}";
+
+/* eslint-disable class-methods-use-this */
+
+var OPEN_SELECTOR = '[data-role="email-modal-open"]';
+var CLOSE_SELECTOR = '[data-role="email-modal-close"]';
+var FORM_CARD_ELEMENT_SELECTOR = '[data-role="form-card"]';
+var FORM_ELEMENT_SELECTOR = '[data-role="form"]';
+var BUTTON_TEXT_ELEMENT_SELECTOR = '[data-role="button-text"]';
+var DESKTOP_MEDIA_QUERY = window.matchMedia('(min-width: 1024px)');
+var WRAPPER_BUTTON_CLOSE = '.modal-wrapper__close-button';
+var MODAL_FORM_CARD = '.modal__form-outer';
+var Modal = /*#__PURE__*/_createClass(function Modal(_ref) {
+  var _this = this;
+  var component = _ref.component;
+  _classCallCheck(this, Modal);
+  // eslint-disable-next-line class-methods-use-this
+  _defineProperty(this, "init", function () {
+    _this.microModal = l;
+    _this.microModal.init();
+    _this.openerElements.forEach(function (openerElement) {
+      openerElement.addEventListener('click', _this.openModal);
+    });
+    _this.closeElements.forEach(function (closeElement) {
+      closeElement.addEventListener('click', _this.closeModal);
+    });
+    window.addEventListener('resize', _this.resizeHandler);
+    _this.form.addEventListener('submit', _this.submitHandler);
+  });
+  _defineProperty(this, "resizeHandler", function () {
+    if (DESKTOP_MEDIA_QUERY.matches) {
+      _this.applyOpenedStyles();
+    } else {
+      _this.applyDefaultStyles();
+    }
+  });
+  _defineProperty(this, "submitHandler", function () {
+    _this.form.classList.add(CLASSES.LOADING);
+    _this.buttonTextElement.textContent = 'Sending...';
+  });
+  _defineProperty(this, "applyDefaultStyles", function () {
+    _this.formCardElement.removeAttribute('style');
+  });
+  _defineProperty(this, "applyOpenedStyles", function () {
+    _this.formCardElement.style.transform = 'translateY(-50px) rotateZ(5deg)';
+  });
+  _defineProperty(this, "openModal", function () {
+    _this.animateOpening();
+    window.addEventListener('keyup', _this.closeModal);
+    l.show('email-modal');
+    lockScroll();
+    _this.animateClose();
+  });
+  _defineProperty(this, "closeModal", function (event) {
+    _this.modalFormCard.classList.add('mouseenter-close');
+    setTimeout(function () {
+      console.log('closeModal 123');
+      _this.modalFormCard.classList.add('mouseenter-close');
+    }, 40);
+    if (!event.target.closest('.modal__form-outer') || event.target.closest('[data-closer-type="direct"]') || event.key === 'Escape') {
+      window.removeEventListener('keyup', _this.closeModal);
+      l.close('email-modal');
+      unlockScroll();
+      console.log('closeModal if');
+      _this.modalFormCard.classList.add('mouseenter-close');
+    }
+  });
+  _defineProperty(this, "animateOpening", function () {
+    if (DESKTOP_MEDIA_QUERY.matches) {
+      var timeline = gsapWithCSS.timeline();
+      timeline.to(_this.formCardElement, {
+        duration: 0,
+        y: 100,
+        rotateZ: 0
+      });
+      timeline.to(_this.formCardElement, {
+        delay: 0.5,
+        duration: 0.5,
+        y: -50,
+        rotateZ: 0,
+        ease: 'back.inOut(4)'
+      }, '>');
+      timeline.to(_this.formCardElement, {
+        duration: 0.5,
+        rotateZ: 5,
+        ease: 'power1.out'
+      }, '-=0.25');
+    }
+  });
+  _defineProperty(this, "animateClose", function () {
+    _this.modalFormCard.classList.remove('mouseenter-close-transition');
+    _this.modalFormCard.classList.remove('mouseenter-close');
+    _this.wrapperButtonClose.addEventListener('mouseenter', function () {
+      _this.modalFormCard.classList.add('mouseenter-close');
+    });
+    _this.wrapperButtonClose.addEventListener('mouseleave', function () {
+      _this.modalFormCard.classList.remove('mouseenter-close');
+      _this.modalFormCard.classList.add('mouseenter-close-transition');
+      console.log('mouseenter remuve');
+    });
+  });
+  this.component = component;
+  this.openerElements = document.querySelectorAll(OPEN_SELECTOR);
+  this.closeElements = document.querySelectorAll(CLOSE_SELECTOR);
+  this.formCardElement = component.querySelector(FORM_CARD_ELEMENT_SELECTOR);
+  this.buttonTextElement = component.querySelector(BUTTON_TEXT_ELEMENT_SELECTOR);
+  this.form = component.querySelector(FORM_ELEMENT_SELECTOR);
+  this.wrapperButtonClose = component.querySelector(WRAPPER_BUTTON_CLOSE);
+  this.modalFormCard = component.querySelector(MODAL_FORM_CARD);
+  this.microModal = undefined;
+});
+insertStyles(styles);
+var COMPONENT_SELECTOR = '[data-component-id="modal"]';
+var components = document.querySelectorAll(COMPONENT_SELECTOR);
+components.forEach(function (component) {
+  var modalInstance = new Modal({
+    component: component
+  });
+  modalInstance.init();
+});

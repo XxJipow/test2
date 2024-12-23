@@ -1,0 +1,78 @@
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+import { i as insertStyles } from '../../assets/scripts/swiper-core-875fc69d.js';
+import { g as gsapWithCSS } from '../../assets/scripts/index-8d1c0166.js';
+import { S as ScrollTrigger } from '../../assets/scripts/ScrollTrigger-5ab3e1af.js';
+import { C as CLASSES } from '../../assets/scripts/classes-dbc829bc.js';
+gsapWithCSS.registerPlugin(ScrollTrigger);
+var Fade = /*#__PURE__*/_createClass(function Fade(_ref) {
+  var _this = this;
+  var component = _ref.component;
+  _classCallCheck(this, Fade);
+  _defineProperty(this, "init", function () {
+    var componentParentNode = _this.component.parentNode;
+    if (componentParentNode.dataset.noFade === 'true') {
+      _this.showComponent();
+    } else {
+      _this.scrollTrigger = ScrollTrigger.create({
+        trigger: _this.component,
+        start: 'bottom-=20% bottom',
+        end: 'top+=20% top',
+        onEnter: _this.showComponentByScrollTriiger,
+        onEnterBack: _this.showComponentByScrollTriiger
+      });
+    }
+  });
+  _defineProperty(this, "showComponent", function () {
+    _this.component.classList.add(CLASSES.ANIMATED);
+  });
+  _defineProperty(this, "showComponentByScrollTriiger", function () {
+    if (_this.scrollTrigger.isActive) {
+      _this.showComponent();
+      _this.scrollTrigger.kill();
+    }
+  });
+  this.component = component;
+  this.scrollTrigger = undefined;
+});
+var styles = ".section__inner--hero [data-component-id=animated-element] {\n  transition-delay: 0.8s;\n}\n\n[data-component-id=animated-element] {\n  transition: opacity 0.5s ease-in-out;\n}\n[data-component-id=animated-element].js--animated {\n  opacity: 1 !important;\n}\n[data-component-id=animated-element].animated-element .animated-element__levitate {\n  animation-name: levitate;\n}\n[data-component-id=animated-element].animated-element .animated-element__rotation {\n  animation-name: infinite-rotation;\n}\n\n@keyframes levitate {\n  0% {\n    transform: translateY(10%);\n  }\n  50% {\n    transform: translateY(-10%);\n  }\n  100% {\n    transform: translateY(10%);\n  }\n}\n@keyframes infinite-rotation {\n  0% {\n    transform: rotate(0);\n  }\n  100% {\n    transform: rotate(360deg);\n  }\n}";
+insertStyles(styles);
+var COMPONENT_SELECTOR = '[data-component-id="animated-element"]';
+var LEVITATE_ELEMENT_SELECTOR = '.animated-element__levitate';
+var ROTATION_ELEMENT_SELECTOR = '.animated-element__rotation';
+var STATIC_ELEMENT_SELECTOR = '.animated-element__static';
+var DEFAULT_LEVITATE_ANIMATION_DURATION = 3.5;
+var DEFAULT_ROTATION_ANIMATION_DURATION = 6;
+var components = document.querySelectorAll(COMPONENT_SELECTOR);
+components.forEach(function (component) {
+  var fade = new Fade({
+    component: component
+  });
+  fade.init();
+  var levitateElement = component.querySelector(LEVITATE_ELEMENT_SELECTOR);
+  var rotationElement = component.querySelector(ROTATION_ELEMENT_SELECTOR);
+  var staticElement = component.querySelector(STATIC_ELEMENT_SELECTOR);
+  var parent = component.parentNode;
+  if (levitateElement && parent.dataset.noLevitate !== 'true') {
+    var _parent$dataset$levit;
+    levitateElement.style.animationDuration = "".concat((_parent$dataset$levit = parent.dataset.levitateDuration) !== null && _parent$dataset$levit !== void 0 ? _parent$dataset$levit : DEFAULT_LEVITATE_ANIMATION_DURATION, "s");
+    levitateElement.style.animationIterationCount = 'infinite';
+    levitateElement.style.animationTimingFunction = 'ease-in-out';
+  }
+  if (rotationElement && parent.dataset.noRotation !== 'true') {
+    var _parent$dataset$rotat, _parent$dataset$anima;
+    rotationElement.style.animationDuration = "".concat((_parent$dataset$rotat = parent.dataset.rotationDuration) !== null && _parent$dataset$rotat !== void 0 ? _parent$dataset$rotat : DEFAULT_ROTATION_ANIMATION_DURATION, "s");
+    rotationElement.style.animationDirection = (_parent$dataset$anima = parent.dataset.animationDirection) !== null && _parent$dataset$anima !== void 0 ? _parent$dataset$anima : 'normal';
+    rotationElement.style.animationIterationCount = 'infinite';
+    rotationElement.style.animationTimingFunction = 'linear';
+  }
+  if (staticElement) {
+    var _parent$dataset$rotat2;
+    staticElement.style.transform = "rotate(".concat((_parent$dataset$rotat2 = parent.dataset.rotation) !== null && _parent$dataset$rotat2 !== void 0 ? _parent$dataset$rotat2 : -45, "deg)");
+  }
+});

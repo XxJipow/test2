@@ -1,0 +1,532 @@
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+import { a as elementChildren, c as createElement, m as makeElementsArray, b as elementOuterSize, d as elementIndex, f as elementParents, S as Swiper, i as insertStyles } from '../../assets/scripts/swiper-core-875fc69d.js';
+function createElementIfNotDefined(swiper, originalParams, params, checkProps) {
+  if (swiper.params.createElements) {
+    Object.keys(checkProps).forEach(function (key) {
+      if (!params[key] && params.auto === true) {
+        var element = elementChildren(swiper.el, ".".concat(checkProps[key]))[0];
+        if (!element) {
+          element = createElement('div', checkProps[key]);
+          element.className = checkProps[key];
+          swiper.el.append(element);
+        }
+        params[key] = element;
+        originalParams[key] = element;
+      }
+    });
+  }
+  return params;
+}
+function classesToSelector(classes) {
+  if (classes === void 0) {
+    classes = '';
+  }
+  return ".".concat(classes.trim().replace(/([\.:!+\/])/g, '\\$1') // eslint-disable-line
+  .replace(/ /g, '.'));
+}
+function Pagination(_ref) {
+  var swiper = _ref.swiper,
+    extendParams = _ref.extendParams,
+    on = _ref.on,
+    emit = _ref.emit;
+  var pfx = 'swiper-pagination';
+  extendParams({
+    pagination: {
+      el: null,
+      bulletElement: 'span',
+      clickable: false,
+      hideOnClick: false,
+      renderBullet: null,
+      renderProgressbar: null,
+      renderFraction: null,
+      renderCustom: null,
+      progressbarOpposite: false,
+      type: 'bullets',
+      // 'bullets' or 'progressbar' or 'fraction' or 'custom'
+      dynamicBullets: false,
+      dynamicMainBullets: 1,
+      formatFractionCurrent: function formatFractionCurrent(number) {
+        return number;
+      },
+      formatFractionTotal: function formatFractionTotal(number) {
+        return number;
+      },
+      bulletClass: "".concat(pfx, "-bullet"),
+      bulletActiveClass: "".concat(pfx, "-bullet-active"),
+      modifierClass: "".concat(pfx, "-"),
+      currentClass: "".concat(pfx, "-current"),
+      totalClass: "".concat(pfx, "-total"),
+      hiddenClass: "".concat(pfx, "-hidden"),
+      progressbarFillClass: "".concat(pfx, "-progressbar-fill"),
+      progressbarOppositeClass: "".concat(pfx, "-progressbar-opposite"),
+      clickableClass: "".concat(pfx, "-clickable"),
+      lockClass: "".concat(pfx, "-lock"),
+      horizontalClass: "".concat(pfx, "-horizontal"),
+      verticalClass: "".concat(pfx, "-vertical"),
+      paginationDisabledClass: "".concat(pfx, "-disabled")
+    }
+  });
+  swiper.pagination = {
+    el: null,
+    bullets: []
+  };
+  var bulletSize;
+  var dynamicBulletIndex = 0;
+  function isPaginationDisabled() {
+    return !swiper.params.pagination.el || !swiper.pagination.el || Array.isArray(swiper.pagination.el) && swiper.pagination.el.length === 0;
+  }
+  function setSideBullets(bulletEl, position) {
+    var bulletActiveClass = swiper.params.pagination.bulletActiveClass;
+    if (!bulletEl) return;
+    bulletEl = bulletEl["".concat(position === 'prev' ? 'previous' : 'next', "ElementSibling")];
+    if (bulletEl) {
+      bulletEl.classList.add("".concat(bulletActiveClass, "-").concat(position));
+      bulletEl = bulletEl["".concat(position === 'prev' ? 'previous' : 'next', "ElementSibling")];
+      if (bulletEl) {
+        bulletEl.classList.add("".concat(bulletActiveClass, "-").concat(position, "-").concat(position));
+      }
+    }
+  }
+  function onBulletClick(e) {
+    var bulletEl = e.target.closest(classesToSelector(swiper.params.pagination.bulletClass));
+    if (!bulletEl) {
+      return;
+    }
+    e.preventDefault();
+    var index = elementIndex(bulletEl) * swiper.params.slidesPerGroup;
+    if (swiper.params.loop) {
+      if (swiper.realIndex === index) return;
+      swiper.slideToLoop(index);
+    } else {
+      swiper.slideTo(index);
+    }
+  }
+  function update() {
+    // Render || Update Pagination bullets/items
+    var rtl = swiper.rtl;
+    var params = swiper.params.pagination;
+    if (isPaginationDisabled()) return;
+    var el = swiper.pagination.el;
+    el = makeElementsArray(el);
+    // Current/Total
+    var current;
+    var previousIndex;
+    var slidesLength = swiper.virtual && swiper.params.virtual.enabled ? swiper.virtual.slides.length : swiper.slides.length;
+    var total = swiper.params.loop ? Math.ceil(slidesLength / swiper.params.slidesPerGroup) : swiper.snapGrid.length;
+    if (swiper.params.loop) {
+      previousIndex = swiper.previousRealIndex || 0;
+      current = swiper.params.slidesPerGroup > 1 ? Math.floor(swiper.realIndex / swiper.params.slidesPerGroup) : swiper.realIndex;
+    } else if (typeof swiper.snapIndex !== 'undefined') {
+      current = swiper.snapIndex;
+      previousIndex = swiper.previousSnapIndex;
+    } else {
+      previousIndex = swiper.previousIndex || 0;
+      current = swiper.activeIndex || 0;
+    }
+    // Types
+    if (params.type === 'bullets' && swiper.pagination.bullets && swiper.pagination.bullets.length > 0) {
+      var bullets = swiper.pagination.bullets;
+      var firstIndex;
+      var lastIndex;
+      var midIndex;
+      if (params.dynamicBullets) {
+        bulletSize = elementOuterSize(bullets[0], swiper.isHorizontal() ? 'width' : 'height', true);
+        el.forEach(function (subEl) {
+          subEl.style[swiper.isHorizontal() ? 'width' : 'height'] = "".concat(bulletSize * (params.dynamicMainBullets + 4), "px");
+        });
+        if (params.dynamicMainBullets > 1 && previousIndex !== undefined) {
+          dynamicBulletIndex += current - (previousIndex || 0);
+          if (dynamicBulletIndex > params.dynamicMainBullets - 1) {
+            dynamicBulletIndex = params.dynamicMainBullets - 1;
+          } else if (dynamicBulletIndex < 0) {
+            dynamicBulletIndex = 0;
+          }
+        }
+        firstIndex = Math.max(current - dynamicBulletIndex, 0);
+        lastIndex = firstIndex + (Math.min(bullets.length, params.dynamicMainBullets) - 1);
+        midIndex = (lastIndex + firstIndex) / 2;
+      }
+      bullets.forEach(function (bulletEl) {
+        var _bulletEl$classList;
+        var classesToRemove = _toConsumableArray(['', '-next', '-next-next', '-prev', '-prev-prev', '-main'].map(function (suffix) {
+          return "".concat(params.bulletActiveClass).concat(suffix);
+        })).map(function (s) {
+          return typeof s === 'string' && s.includes(' ') ? s.split(' ') : s;
+        }).flat();
+        (_bulletEl$classList = bulletEl.classList).remove.apply(_bulletEl$classList, _toConsumableArray(classesToRemove));
+      });
+      if (el.length > 1) {
+        bullets.forEach(function (bullet) {
+          var bulletIndex = elementIndex(bullet);
+          if (bulletIndex === current) {
+            var _bullet$classList;
+            (_bullet$classList = bullet.classList).add.apply(_bullet$classList, _toConsumableArray(params.bulletActiveClass.split(' ')));
+          } else if (swiper.isElement) {
+            bullet.setAttribute('part', 'bullet');
+          }
+          if (params.dynamicBullets) {
+            if (bulletIndex >= firstIndex && bulletIndex <= lastIndex) {
+              var _bullet$classList2;
+              (_bullet$classList2 = bullet.classList).add.apply(_bullet$classList2, _toConsumableArray("".concat(params.bulletActiveClass, "-main").split(' ')));
+            }
+            if (bulletIndex === firstIndex) {
+              setSideBullets(bullet, 'prev');
+            }
+            if (bulletIndex === lastIndex) {
+              setSideBullets(bullet, 'next');
+            }
+          }
+        });
+      } else {
+        var bullet = bullets[current];
+        if (bullet) {
+          var _bullet$classList3;
+          (_bullet$classList3 = bullet.classList).add.apply(_bullet$classList3, _toConsumableArray(params.bulletActiveClass.split(' ')));
+        }
+        if (swiper.isElement) {
+          bullets.forEach(function (bulletEl, bulletIndex) {
+            bulletEl.setAttribute('part', bulletIndex === current ? 'bullet-active' : 'bullet');
+          });
+        }
+        if (params.dynamicBullets) {
+          var firstDisplayedBullet = bullets[firstIndex];
+          var lastDisplayedBullet = bullets[lastIndex];
+          for (var i = firstIndex; i <= lastIndex; i += 1) {
+            if (bullets[i]) {
+              var _bullets$i$classList;
+              (_bullets$i$classList = bullets[i].classList).add.apply(_bullets$i$classList, _toConsumableArray("".concat(params.bulletActiveClass, "-main").split(' ')));
+            }
+          }
+          setSideBullets(firstDisplayedBullet, 'prev');
+          setSideBullets(lastDisplayedBullet, 'next');
+        }
+      }
+      if (params.dynamicBullets) {
+        var dynamicBulletsLength = Math.min(bullets.length, params.dynamicMainBullets + 4);
+        var bulletsOffset = (bulletSize * dynamicBulletsLength - bulletSize) / 2 - midIndex * bulletSize;
+        var offsetProp = rtl ? 'right' : 'left';
+        bullets.forEach(function (bullet) {
+          bullet.style[swiper.isHorizontal() ? offsetProp : 'top'] = "".concat(bulletsOffset, "px");
+        });
+      }
+    }
+    el.forEach(function (subEl, subElIndex) {
+      if (params.type === 'fraction') {
+        subEl.querySelectorAll(classesToSelector(params.currentClass)).forEach(function (fractionEl) {
+          fractionEl.textContent = params.formatFractionCurrent(current + 1);
+        });
+        subEl.querySelectorAll(classesToSelector(params.totalClass)).forEach(function (totalEl) {
+          totalEl.textContent = params.formatFractionTotal(total);
+        });
+      }
+      if (params.type === 'progressbar') {
+        var progressbarDirection;
+        if (params.progressbarOpposite) {
+          progressbarDirection = swiper.isHorizontal() ? 'vertical' : 'horizontal';
+        } else {
+          progressbarDirection = swiper.isHorizontal() ? 'horizontal' : 'vertical';
+        }
+        var scale = (current + 1) / total;
+        var scaleX = 1;
+        var scaleY = 1;
+        if (progressbarDirection === 'horizontal') {
+          scaleX = scale;
+        } else {
+          scaleY = scale;
+        }
+        subEl.querySelectorAll(classesToSelector(params.progressbarFillClass)).forEach(function (progressEl) {
+          progressEl.style.transform = "translate3d(0,0,0) scaleX(".concat(scaleX, ") scaleY(").concat(scaleY, ")");
+          progressEl.style.transitionDuration = "".concat(swiper.params.speed, "ms");
+        });
+      }
+      if (params.type === 'custom' && params.renderCustom) {
+        subEl.innerHTML = params.renderCustom(swiper, current + 1, total);
+        if (subElIndex === 0) emit('paginationRender', subEl);
+      } else {
+        if (subElIndex === 0) emit('paginationRender', subEl);
+        emit('paginationUpdate', subEl);
+      }
+      if (swiper.params.watchOverflow && swiper.enabled) {
+        subEl.classList[swiper.isLocked ? 'add' : 'remove'](params.lockClass);
+      }
+    });
+  }
+  function render() {
+    // Render Container
+    var params = swiper.params.pagination;
+    if (isPaginationDisabled()) return;
+    var slidesLength = swiper.virtual && swiper.params.virtual.enabled ? swiper.virtual.slides.length : swiper.grid && swiper.params.grid.rows > 1 ? swiper.slides.length / Math.ceil(swiper.params.grid.rows) : swiper.slides.length;
+    var el = swiper.pagination.el;
+    el = makeElementsArray(el);
+    var paginationHTML = '';
+    if (params.type === 'bullets') {
+      var numberOfBullets = swiper.params.loop ? Math.ceil(slidesLength / swiper.params.slidesPerGroup) : swiper.snapGrid.length;
+      if (swiper.params.freeMode && swiper.params.freeMode.enabled && numberOfBullets > slidesLength) {
+        numberOfBullets = slidesLength;
+      }
+      for (var i = 0; i < numberOfBullets; i += 1) {
+        if (params.renderBullet) {
+          paginationHTML += params.renderBullet.call(swiper, i, params.bulletClass);
+        } else {
+          // prettier-ignore
+          paginationHTML += "<".concat(params.bulletElement, " ").concat(swiper.isElement ? 'part="bullet"' : '', " class=\"").concat(params.bulletClass, "\"></").concat(params.bulletElement, ">");
+        }
+      }
+    }
+    if (params.type === 'fraction') {
+      if (params.renderFraction) {
+        paginationHTML = params.renderFraction.call(swiper, params.currentClass, params.totalClass);
+      } else {
+        paginationHTML = "<span class=\"".concat(params.currentClass, "\"></span>") + ' / ' + "<span class=\"".concat(params.totalClass, "\"></span>");
+      }
+    }
+    if (params.type === 'progressbar') {
+      if (params.renderProgressbar) {
+        paginationHTML = params.renderProgressbar.call(swiper, params.progressbarFillClass);
+      } else {
+        paginationHTML = "<span class=\"".concat(params.progressbarFillClass, "\"></span>");
+      }
+    }
+    swiper.pagination.bullets = [];
+    el.forEach(function (subEl) {
+      if (params.type !== 'custom') {
+        subEl.innerHTML = paginationHTML || '';
+      }
+      if (params.type === 'bullets') {
+        var _swiper$pagination$bu;
+        (_swiper$pagination$bu = swiper.pagination.bullets).push.apply(_swiper$pagination$bu, _toConsumableArray(subEl.querySelectorAll(classesToSelector(params.bulletClass))));
+      }
+    });
+    if (params.type !== 'custom') {
+      emit('paginationRender', el[0]);
+    }
+  }
+  function init() {
+    swiper.params.pagination = createElementIfNotDefined(swiper, swiper.originalParams.pagination, swiper.params.pagination, {
+      el: 'swiper-pagination'
+    });
+    var params = swiper.params.pagination;
+    if (!params.el) return;
+    var el;
+    if (typeof params.el === 'string' && swiper.isElement) {
+      el = swiper.el.querySelector(params.el);
+    }
+    if (!el && typeof params.el === 'string') {
+      el = _toConsumableArray(document.querySelectorAll(params.el));
+    }
+    if (!el) {
+      el = params.el;
+    }
+    if (!el || el.length === 0) return;
+    if (swiper.params.uniqueNavElements && typeof params.el === 'string' && Array.isArray(el) && el.length > 1) {
+      el = _toConsumableArray(swiper.el.querySelectorAll(params.el));
+      // check if it belongs to another nested Swiper
+      if (el.length > 1) {
+        el = el.filter(function (subEl) {
+          if (elementParents(subEl, '.swiper')[0] !== swiper.el) return false;
+          return true;
+        })[0];
+      }
+    }
+    if (Array.isArray(el) && el.length === 1) el = el[0];
+    Object.assign(swiper.pagination, {
+      el: el
+    });
+    el = makeElementsArray(el);
+    el.forEach(function (subEl) {
+      if (params.type === 'bullets' && params.clickable) {
+        var _subEl$classList;
+        (_subEl$classList = subEl.classList).add.apply(_subEl$classList, _toConsumableArray((params.clickableClass || '').split(' ')));
+      }
+      subEl.classList.add(params.modifierClass + params.type);
+      subEl.classList.add(swiper.isHorizontal() ? params.horizontalClass : params.verticalClass);
+      if (params.type === 'bullets' && params.dynamicBullets) {
+        subEl.classList.add("".concat(params.modifierClass).concat(params.type, "-dynamic"));
+        dynamicBulletIndex = 0;
+        if (params.dynamicMainBullets < 1) {
+          params.dynamicMainBullets = 1;
+        }
+      }
+      if (params.type === 'progressbar' && params.progressbarOpposite) {
+        subEl.classList.add(params.progressbarOppositeClass);
+      }
+      if (params.clickable) {
+        subEl.addEventListener('click', onBulletClick);
+      }
+      if (!swiper.enabled) {
+        subEl.classList.add(params.lockClass);
+      }
+    });
+  }
+  function destroy() {
+    var params = swiper.params.pagination;
+    if (isPaginationDisabled()) return;
+    var el = swiper.pagination.el;
+    if (el) {
+      el = makeElementsArray(el);
+      el.forEach(function (subEl) {
+        subEl.classList.remove(params.hiddenClass);
+        subEl.classList.remove(params.modifierClass + params.type);
+        subEl.classList.remove(swiper.isHorizontal() ? params.horizontalClass : params.verticalClass);
+        if (params.clickable) {
+          var _subEl$classList2;
+          (_subEl$classList2 = subEl.classList).remove.apply(_subEl$classList2, _toConsumableArray((params.clickableClass || '').split(' ')));
+          subEl.removeEventListener('click', onBulletClick);
+        }
+      });
+    }
+    if (swiper.pagination.bullets) swiper.pagination.bullets.forEach(function (subEl) {
+      var _subEl$classList3;
+      return (_subEl$classList3 = subEl.classList).remove.apply(_subEl$classList3, _toConsumableArray(params.bulletActiveClass.split(' ')));
+    });
+  }
+  on('changeDirection', function () {
+    if (!swiper.pagination || !swiper.pagination.el) return;
+    var params = swiper.params.pagination;
+    var el = swiper.pagination.el;
+    el = makeElementsArray(el);
+    el.forEach(function (subEl) {
+      subEl.classList.remove(params.horizontalClass, params.verticalClass);
+      subEl.classList.add(swiper.isHorizontal() ? params.horizontalClass : params.verticalClass);
+    });
+  });
+  on('init', function () {
+    if (swiper.params.pagination.enabled === false) {
+      // eslint-disable-next-line
+      disable();
+    } else {
+      init();
+      render();
+      update();
+    }
+  });
+  on('activeIndexChange', function () {
+    if (typeof swiper.snapIndex === 'undefined') {
+      update();
+    }
+  });
+  on('snapIndexChange', function () {
+    update();
+  });
+  on('snapGridLengthChange', function () {
+    render();
+    update();
+  });
+  on('destroy', function () {
+    destroy();
+  });
+  on('enable disable', function () {
+    var el = swiper.pagination.el;
+    if (el) {
+      el = makeElementsArray(el);
+      el.forEach(function (subEl) {
+        return subEl.classList[swiper.enabled ? 'remove' : 'add'](swiper.params.pagination.lockClass);
+      });
+    }
+  });
+  on('lock unlock', function () {
+    update();
+  });
+  on('click', function (_s, e) {
+    var targetEl = e.target;
+    var el = makeElementsArray(swiper.pagination.el);
+    if (swiper.params.pagination.el && swiper.params.pagination.hideOnClick && el && el.length > 0 && !targetEl.classList.contains(swiper.params.pagination.bulletClass)) {
+      if (swiper.navigation && (swiper.navigation.nextEl && targetEl === swiper.navigation.nextEl || swiper.navigation.prevEl && targetEl === swiper.navigation.prevEl)) return;
+      var isHidden = el[0].classList.contains(swiper.params.pagination.hiddenClass);
+      if (isHidden === true) {
+        emit('paginationShow');
+      } else {
+        emit('paginationHide');
+      }
+      el.forEach(function (subEl) {
+        return subEl.classList.toggle(swiper.params.pagination.hiddenClass);
+      });
+    }
+  });
+  var enable = function enable() {
+    swiper.el.classList.remove(swiper.params.pagination.paginationDisabledClass);
+    var el = swiper.pagination.el;
+    if (el) {
+      el = makeElementsArray(el);
+      el.forEach(function (subEl) {
+        return subEl.classList.remove(swiper.params.pagination.paginationDisabledClass);
+      });
+    }
+    init();
+    render();
+    update();
+  };
+  var disable = function disable() {
+    swiper.el.classList.add(swiper.params.pagination.paginationDisabledClass);
+    var el = swiper.pagination.el;
+    if (el) {
+      el = makeElementsArray(el);
+      el.forEach(function (subEl) {
+        return subEl.classList.add(swiper.params.pagination.paginationDisabledClass);
+      });
+    }
+    destroy();
+  };
+  Object.assign(swiper.pagination, {
+    enable: enable,
+    disable: disable,
+    render: render,
+    update: update,
+    init: init,
+    destroy: destroy
+  });
+}
+var styles = "@media screen and (min-width: 991px) {\n  [data-component-id=steps].steps .steps-slide:nth-child(2) {\n    transform: translateY(10rem);\n  }\n  [data-component-id=steps].steps .steps-slide:nth-child(3) {\n    transform: translateY(5rem);\n  }\n}\n[data-component-id=steps].steps .steps__slider-pagination {\n  gap: 6px;\n}\n[data-component-id=steps].steps .steps__slider-pagination .swiper-pagination-bullet {\n  display: block;\n  width: 6px;\n  height: 6px;\n  background-color: #383838;\n  border-radius: 0.1875rem;\n  transition: all 0.3s ease 0s;\n}\n[data-component-id=steps].steps .steps__slider-pagination .swiper-pagination-bullet.swiper-pagination-bullet-active {\n  background-color: var(--accent);\n}\n\n@media (max-width: 991px) {\n  .steps-slide {\n    transform: translate(0px, 0px) !important;\n  }\n}";
+var SLIDER_SELECTOR = '[data-role="slider"]';
+var Steps = /*#__PURE__*/_createClass(function Steps(_ref2) {
+  var _this = this;
+  var component = _ref2.component;
+  _classCallCheck(this, Steps);
+  // eslint-disable-next-line class-methods-use-this
+  _defineProperty(this, "init", function () {
+    _this.swiper = new Swiper(_this.sliderElement, {
+      modules: [Pagination],
+      wrapperClass: 'steps__slider-wrapper',
+      slideClass: 'steps-slide',
+      slidesPerView: 1,
+      spaceBetween: 27,
+      pagination: {
+        el: '.steps__slider-pagination'
+      },
+      breakpoints: {
+        992: {
+          slidesPerView: 3,
+          spaceBetween: 70
+        },
+        768: {
+          slidesPerView: 2,
+          spaceBetween: 27
+        }
+      }
+    });
+  });
+  this.component = component;
+  this.sliderElement = component.querySelector(SLIDER_SELECTOR);
+  this.swiper = undefined;
+});
+insertStyles(styles);
+var COMPONENT_SELECTOR = '[data-component-id="steps"]';
+var components = document.querySelectorAll(COMPONENT_SELECTOR);
+components.forEach(function (component) {
+  var stepsInstance = new Steps({
+    component: component
+  });
+  stepsInstance.init();
+});

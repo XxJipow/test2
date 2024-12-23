@@ -1,0 +1,91 @@
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+import { g as gsapWithCSS } from '../../assets/scripts/index-8d1c0166.js';
+import { B as BREAKPOINTS } from '../../assets/scripts/breakpoints-c1c87b10.js';
+import { C as CLASSES } from '../../assets/scripts/classes-dbc829bc.js';
+import { i as insertStyles } from '../../assets/scripts/swiper-core-875fc69d.js';
+var styles = "[data-component-id=custom-cursor-wrapper].js--hidden {\n  opacity: 0;\n}\n[data-component-id=custom-cursor-wrapper].js--hover-to-interactive-element .custom-cursor .custom-cursor__image.custom-cursor__image--hover {\n  opacity: 1;\n}\n\ninput {\n  cursor: none !important;\n}";
+insertStyles(styles);
+var isDesktop = function isDesktop() {
+  return window.matchMedia("(min-width: ".concat(BREAKPOINTS.TABLET_MD, "px)")).matches;
+};
+var initCustomCursor = function initCustomCursor() {
+  var cursorWrapperElement = document.querySelector('[data-component-id="custom-cursor-wrapper"]');
+  var allCursorsElements = _toConsumableArray(cursorWrapperElement.querySelectorAll('[data-role="custom-cursor"]'));
+  var glareElement = document.querySelector('[data-role-animation="glare"]');
+  var interactiveTags = ['a:not([data-specificity="without-repainting"])', 'button', 'input', 'textarea', 'select', '[tabindex="0"]'];
+  var boxesWithoutCursor = ['[data-action="without-cursor"]'];
+  var moveCursor = function moveCursor(event) {
+    gsapWithCSS.to(allCursorsElements, {
+      left: event.clientX,
+      top: event.clientY,
+      stagger: 0,
+      duration: 0,
+      ease: 'none'
+    });
+  };
+  var changeCursorStylesAfterHover = function changeCursorStylesAfterHover(event) {
+    var hasDesiredParent = function hasDesiredParent(attribute) {
+      return event.target.closest(attribute);
+    };
+    cursorWrapperElement.classList.remove(CLASSES.HIDDEN, CLASSES.TRANSPARENT, CLASSES.HOVER_TO_INTERACTIVE_ELEMENT);
+    if (interactiveTags.some(function (element) {
+      return hasDesiredParent(element);
+    })) {
+      cursorWrapperElement.classList.add(CLASSES.HOVER_TO_INTERACTIVE_ELEMENT);
+    } else if (boxesWithoutCursor.some(function (element) {
+      return hasDesiredParent(element);
+    })) {
+      cursorWrapperElement.classList.add(CLASSES.TRANSPARENT);
+    }
+  };
+  var initGlaresAnimation = function initGlaresAnimation(event) {
+    if (!isDesktop) return;
+    gsapWithCSS.to(glareElement, {
+      left: event.clientX - 25,
+      top: event.clientY - 25,
+      duration: 0.6,
+      ease: 'power3.out'
+    });
+  };
+  var initMovingLogic = function initMovingLogic(event) {
+    moveCursor(event);
+    changeCursorStylesAfterHover(event);
+    initGlaresAnimation(event);
+  };
+  var changeCursorStylesAfterMouseOut = function changeCursorStylesAfterMouseOut() {
+    cursorWrapperElement.classList.add(CLASSES.HIDDEN);
+  };
+  var changeCursorStylesAfterMouseDown = function changeCursorStylesAfterMouseDown() {
+    cursorWrapperElement.classList.add(CLASSES.CURSOR_CLICKED);
+  };
+  var changeCursorStylesAfterMouseUp = function changeCursorStylesAfterMouseUp() {
+    cursorWrapperElement.classList.remove(CLASSES.CURSOR_CLICKED);
+  };
+  var addListeners = function addListeners() {
+    window.addEventListener('mousemove', initMovingLogic);
+    document.addEventListener('mouseleave', changeCursorStylesAfterMouseOut);
+    window.addEventListener('mousedown', changeCursorStylesAfterMouseDown);
+    window.addEventListener('mouseup', changeCursorStylesAfterMouseUp);
+  };
+  var removeListeners = function removeListeners() {
+    window.removeEventListener('mousemove', initMovingLogic);
+    document.removeEventListener('mouseleave', changeCursorStylesAfterMouseOut);
+    window.removeEventListener('mousedown', changeCursorStylesAfterMouseDown);
+    window.removeEventListener('mouseup', changeCursorStylesAfterMouseUp);
+  };
+  var checkWindowSize = function checkWindowSize() {
+    if (isDesktop) {
+      addListeners();
+    } else {
+      removeListeners();
+    }
+  };
+  window.addEventListener('resize', checkWindowSize);
+  checkWindowSize();
+};
+initCustomCursor();
